@@ -1,0 +1,42 @@
+{% extends "global/Base.html" %}
+{% load otree_tags %}
+
+{% block title %}
+   Willkommen zum Experiment!
+{% endblock %}
+{% block styles %}
+<style>
+div.fake{
+	border-radius: 15px;
+    background-color: #E9E9E9;
+    background-position: left top;
+    background-repeat: repeat;
+    padding: 20px; 
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="fake">
+ 
+	<p> Willkommen zu unserem Experiment! </p>
+
+	<p>
+		Es ist sehr wichtig, dass Sie die nachfolgenden Instruktionen aufmerksam durchlesen. Für Ihr Erscheinen zu diesem Experiment erhalten Sie 6 Euro. Während des Experiments haben Sie die Möglichkeit, weitere Geldbeträge zu verdienen. Die Höhe dieser Beträge hängt von Ihren eigenen Entscheidungen sowie Zufallsziehungen des Computers und den Ergebnissen eines Optimierungs-Algorithmus ab. Alle Beträge während des Experiments werden in Euro berechnet. Nach dem Experiment folgt noch ein kurzer Fragebogen. Am Ende bekommen Sie alle Geldbeträge von uns <b> bar </b> ausgezahlt.
+	</p>
+ 
+	<p>
+		Bitte stellen Sie nun jegliche Gespräche mit Ihren Nachbarn ein, schalten Sie Ihr Mobiltelefon aus und entfernen Sie alles von Ihrem Tisch, was Sie nicht für das Experiment benötigen. Die Nichtbeachtung dieser Regeln führt zum Ausschluss vom Experiment und allen Zahlungen.
+	</p>
+ 
+	<p>
+		Falls Sie Fragen haben, heben Sie bitte jederzeit Ihre Hand aus der Kabine. Wir kommen dann zu Ihnen und beantworten diese einzeln an Ihrem Platz.
+	</p>
+
+</div>
+<p>{% next_button %}</p>
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}

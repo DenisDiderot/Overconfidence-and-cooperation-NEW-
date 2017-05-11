@@ -1,0 +1,74 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+Verständnisfragen {% endblock %}
+
+{% block content %}
+
+    <p>
+        Um sicher zu gehen, dass Sie die Instruktionen verstanden haben, folgen nun Verständnisfragen.
+        Sollten Sie noch Fragen haben, melden Sie sich bitte bei den Experimentatoren, diese helfen Ihnen gerne weiter.
+    </p>
+    <p>
+    Was ist die höchste Anzahl an Filtern, die Sie setzen können?
+    {% formfield player.control_question1 with label='' %}
+    </p>
+
+    <br>
+
+
+    <p>
+    Wie viele Übereinstimmungen hat das gekaufte Produkt mit dem Zielprodukt?
+    {% formfield player.control_question2 with label='' %}
+    </p>
+
+        <table border="1" style="border:3px; border-style:solid; border-color:#CCC; padding: 1em; color: #333;">
+            <tr>
+                <th>Ziel-Produkt</th>
+                <th>Gekauftes Produkt</th>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static "Table/11100101.png" %}"/>
+                </td>
+                <td>
+                    <img src="{% static "Table/01000111.png" %}"/>
+                </td>
+            </tr>
+
+        </table>
+
+    <br>
+    <br>
+
+    <p>
+    Nehmen Sie an, Sie kaufen ein Produkt mit dem Wert 6 (6 Übereinstimmungen mit dem Zielprodukt).
+    Nehmen Sie weiter an, dass der Preis für das Produkt 4 beträgt und Sie während der Suche 5 Boxen aufgedeckt haben.
+    Wie hoch wäre Ihre Auszahlung in dieser Runde, wenn das Aufdecken der Boxen 10 cent betragen würde?    {% formfield player.control_question3 with label='' %}
+    </p>
+
+    <br>
+
+    <p>
+    Nehmen Sie an, Sie würden in derselben Situation die Suche abbrechen. Wie hoch wäre dann Ihre Auszahlung in dieser Runde?
+    {% formfield player.control_question4 with label='' %}
+    </p>
+
+    <br>
+
+    <p>
+    Wie viele Runden werden am Ende des Experimentes ausgezahlt?
+    {% formfield player.control_question5 with label='' %}
+    </p>
+
+    <br>
+
+    {% next_button %}
+
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}

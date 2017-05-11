@@ -1,0 +1,158 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Erklärungen zum Experiment
+{% endblock %}
+{% block styles %}
+<style>
+td.equation2 {
+    padding-left: 120px;
+}
+td.equation1 {
+    padding-left: 10px;
+}
+img.special{
+    padding-left: 150px;
+}
+div.fake{
+    border-radius: 15px;
+    background-color: #E9E9E9;
+    background-position: left top;
+    background-repeat: repeat;
+    padding: 20px; 
+}
+</style>
+{% endblock %}
+{% block content %}
+
+    <div class="fake">
+
+        <p>
+            Das heutige Experiment besteht aus 2 mal 10 Runden. Aus den ersten 10 Runden <b> und </b> aus den zweiten 10 Runden wird <b> jeweils eine </b> Runde zufällig vom Computer zur Auszahlung ausgewählt. Sie bekommen also am Ende genau zwei Runden ausbezahlt.
+        </p>
+        
+        <p>
+            <big> <u> In jeder Runde </u></big> haben Sie die Rolle eines <b> Käufers </b>, der ein Produkt zu einem bestimmten Preis erwerben kann. Sie können dabei aus einem Angebot von verschiedenen <b> Produkten </b> wählen.
+        </p>
+        
+        <p>
+            Ein <b> Produkt </b> wird durch ein Gesicht dargestellt, welches genau 8 verschiedene Merkmale hat. Die Merkmale sind dabei:
+        </p>
+
+        <ul>
+            <li> Ein Doktorhut <b> oder </b> ein Filzhut </li>
+            <li> Eine Brille <b> oder </b> keine Brille </li>
+            <li> Ein zwinkerndes linkes Auge <b> oder </b> ein offenes linkes Auge </li>
+            <li> Ein zwinkerndes rechtes Auge <b> oder </b> ein offenes rechtes Auge </li>
+            <li> Eine Nase <b> oder </b> keine Nase </li>
+            <li> Ohren <b> oder </b> keine Ohren </li>
+            <li> Ein halb-lächelnder Mund <b> oder </b> ein voll-lächelnder Mund </li>
+        </ul>
+     
+        <p>
+        Aus diesen Merkmalen können maximal 256 verschiedene Produkte gebildet werden. Ein Produkt kann also <b> zum Beispiel </b> ein Gesicht sein mit einem Doktorhut, keinen Augenbrauen, einer Brille, einem offenen linken Auge, einem zwinkernden rechten Auge, keiner Nase, Ohren, und einem halb-lächelnden Mund. Dieses Beispielprodukt würde wie folgt aussehen:
+        </p>
+
+        <img class="special" src="{% static "Table/10011100.png" %}"/>
+
+     
+        <p>
+            Die Kombinationen der Merkmale für die zur Wahl stehenden Produkte werden zufällig vom Computer gezogen. Es treten alle Kombinationen mit gleicher Wahrscheinlichkeit auf. Es kann dabei sein, dass in manchen Runden manche Kombinationen und damit Produkte zufällig häufiger vom Computer gezogen werden als andere. Außerdem ist es möglich, dass manche Kombinationen an Merkmalen und damit Produkte gar nicht vom Computer gezogen wurden und deshalb nicht in den zur Wahl stehenden Produkten vorkommen.
+        </p>
+
+        <p>
+            Sie bekommen in jeder Runde ein <b> Ziel-Produkt </b> zufällig vom Computer zugewiesen. Ihre Aufgabe ist es nun, nach einem Produkt zu suchen, welches Sie kaufen möchten. Dabei bestimmt sich der <b> Wert </b> des gekauften Produktes aus der <b> Anzahl der übereinstimmenden Merkmale des Ziel-Produkts und Ihres gekauften Produktes </b>.
+        </p>
+
+        <table border="1" style="border:3px; border-style:solid; border-color:#CCC; padding: 1em; color: #333;">
+            <tr>
+                <th>Ziel-Produkt</th>
+                <th>Gekauftes Produkt</th> 
+            </tr>
+            <tr>
+                <td>
+                    <img src="{% static "Table/11100101.png" %}"/>
+                </td>
+                <td>
+                    <img src="{% static "Table/01000111.png" %}"/>
+                </td>
+            </tr>
+
+        </table>
+
+        <p>
+            Das Gesicht des Ziel-Produktes und das Gesicht des gekauften Produktes stimmt in diesem Beispiel in 5 Merkmalen überein. Beide Produkte haben eine Brille, ein zwinkerndes linkes Auge, Augenbrauen, einen voll-lächelnden Mund und keine Ohren. Der Wert des gekauften Produktes würde hier also 5 betragen.
+        </p>
+
+        <p>
+            <big> <u> Am Anfang jeder Runde </u> </big> sehen Sie Boxen auf dem Bildschirm. Hinter jeder Box wird sich genau ein zufällig bestimmtes Produkt befinden, welches Sie zunächst nicht sehen können. Zusätzlich wird Ihnen immer in der linken oberen Ecke des Bildschirms Ihr Ziel-Gesicht angezeigt. Sie haben nun in <b> zwei aufeinanderfolgenden Schritten </b> die Möglichkeit nach einem Gesicht zu <b> suchen </b>, das Sie kaufen möchten.
+        </p>
+     
+        <p><strong>
+            <big> <u> 1. Schritt: </u> </big>
+        </strong></p>
+        <p>
+            Im ersten Schritt der Suche haben Sie die Möglichkeit <b> Filter </b> zu setzen. Sie können dabei zwischen einer Anzahl von 0, 1, 2, 3, 4, 5, 6, 7 oder 8 Filtern wählen. Mit der Anzahl der Filter die Sie setzen, bestimmen Sie, welche Gesichter unter den Produkten sind, die Ihnen zur Wahl stehen werden. Wenn Sie 1 Filter wählen werden alle Ihnen zur Wahl stehenden Produkte mindestens eine <b> Übereinstimmung mit Ihrem Ziel-Produkt </b> haben, wenn Sie 2 Filter wählen, werden alle Produkte mindestens zwei Übereinstimmungen mit Ihrem Ziel-Produkt haben, und so weiter.
+        </p>
+     
+        <p>
+            Nachdem Sie die Anzahl der Filter gesetzt haben, bestimmt ein Computer-Algorithmus <b> einen Produkt-Preis </b>. Dieser Preis ist für alle auf dem Bildschirm angezeigten Produkte <b> gleich </b>. Beachten Sie dabei, dass der Computer-Algorithmus die von Ihnen zuvor getroffene Entscheidung im ersten Schritt abspeichert und diese Information bei der Berechnung des Preises verwenden kann.  Der Computer-Algorithmus ist mit dem Ziel programmiert einen möglichst hohen Gewinn aus dem Verkauf zu erzielen. Der Computer-Algorithmus kann dabei <b> keine </b> Informationen aus vorherigen Runden nutzen. Der vom Algorithmus bestimmte Produkt-Preis wird Ihnen direkt oberhalb der Boxen angezeigt.
+        </p>
+        <p><strong>
+            <big> <u> 2. Schritt: </u> </big>
+        </strong></p>
+
+        <p>
+            Im zweiten Schritt werden Ihnen nun die 256 Boxen mit Produkten sowie Ihr Ziel-Produkt angezeigt. Nun haben Sie die Möglichkeit <b> einzelne Boxen aufzudecken </b>, um das Produkt zu sehen das sich darunter befindet. Welches Produkt sich darunter befindet, wird Ihnen direkt unterhalb Ihres Ziel-Produktes auf dem Bildschirm angezeigt. Das Aufdecken der ersten Box ist dabei kostenlos. Jede weitere Box, die Sie aufdecken, kostet einen bestimmten festen Betrag. Wie hoch dieser Betrag für die ersten 10 Runden ist, erfahren Sie <b> direkt vor dem Beginn der ersten Runde </b>.
+        </p>
+        <p>
+            Wenn Sie eine Box aufdecken, verändert sich Ihre Farbe dauerhaft von blau zu rot. Die roten Boxen sind also diejenigen, die Sie bereits aufgedeckt haben. Sie können sich das Produkt darunter <b> jederzeit kostenlos wieder ansehen </b> indem Sie erneut auf die Box klicken. Das entsprechende Produkt erscheint dann wieder unterhalb Ihres Ziel-Produktes.
+        </p>
+        <p>
+            Beachten Sie dabei, dass dem Computer-Algorithmus bei der Berechnung des Preises am Ende des ersten Schrittes nicht <b> bekannt ist </b>, dass Sie im zweiten Schritt mehr als eine Box aufdecken können. Es ist ihm also auch nicht bekannt, wie hoch der feste Betrag ist, der ihnen für jede aufgedeckte Box berechnet wird. Der Algorithmus kann diese Informationen also nicht für die Berechnung des Preises nutzen.
+        </p>
+        <p> 
+            Wenn Sie mit der Wahl ihres Produktes zufrieden sind, bestätigen Sie Ihre Auswahl bitte mit Klick auf den „Kaufen“ Button.
+        </p>
+     
+        <p>
+            <big> <u> Die Auszahlung jeder Runde </u> </big> berechnet sich dann wie folgt:
+        </p>    
+        
+        <table bgcolor="#D8F6CE" style="border:1px; border-style:solid; border-color:#CCC; padding: 1em;">
+            <tr>
+                <td class="equation1"><big><strong> Auszahlung =
+                Wert des Produktes </strong></big> </td>
+            </tr>
+            <tr>
+                <td class="equation2"> <big><strong> – Produkt-Preis</strong></big> </td>
+            </tr>
+            <tr>
+                <td class="equation2"> <big><strong>–  [(Anzahl der aufgedeckten Boxen - 1)  x fester Betrag pro Box]  </strong></big> </td>
+            </tr>
+        </table>     
+
+
+        <p>
+            Sie haben außerdem im zweiten Schritt <b> jederzeit </b> die Möglichkeit, das Aufdecken der einzelnen Boxen zu beenden, <b> ohne ein Produkt zu kaufen </b>.  Sie können in dieser Runde dann kein Geld aus dem Kauf eines Produktes erhalten. Bitte beachten Sie jedoch, dass Sie den Betrag für jede aufgedeckte Box in diesem Fall <b> trotzdem bezahlen </b> müssen.
+        </p>
+
+        <p>
+            Am Ende jeder Runde erhalten Sie ihre <b> Auszahlung für diese Runde angezeigt </b>. Welche der Runden ausbezahlt werden, erfahren Sie am Ende des Experiments.
+        </p>
+
+        <p>
+            Haben Sie noch irgendwelche Fragen oder gibt es Unklarheiten? Falls ja, strecken Sie bitte Ihre Hand aus der Kabine. Wir kommen dann gerne zu Ihnen.
+        </p>
+
+    </div>
+
+    {% next_button %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}

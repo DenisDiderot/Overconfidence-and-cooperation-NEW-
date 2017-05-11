@@ -1,0 +1,12 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content  %}
+	<p> Die ersten 10 Runden sind jetzt vorbei. Bitte drücken Sie jetzt auf "Weiter". </p>
+    {% next_button %}
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}
