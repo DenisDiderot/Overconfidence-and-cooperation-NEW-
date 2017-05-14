@@ -19,7 +19,6 @@ See the comment below about how to randomize the order of pages.
 class Constants(BaseConstants):
     name_in_url = 'quiz'
     players_per_group = 3
-    players_overall = 3                                 #substitute this with number of participants somehow automatic
 
     with open('quiz/quiz.csv') as f:
         questions = list(csv.DictReader(f))
@@ -31,8 +30,8 @@ class Subsession(BaseSubsession):
     #d = models.CharField()
     sorted_d = models.CharField()
     percentile = models.CharField()
-
-
+    participants = models.PositiveIntegerField()
+    
     def before_session_starts(self):
         self.group_randomly()
         if self.round_number == 1:
@@ -54,6 +53,8 @@ class Subsession(BaseSubsession):
             p.question = question_data['question']
             p.solution = question_data['solution']
 
+        self.participants = len(self.get_players())
+
     def get_ranking(self):                               #this function should get the results from all participants, rank them and then get the quantile
         d = dict()                                              #PROBLEMS: get the count in dictionary
         for p in self.get_players():
@@ -62,13 +63,13 @@ class Subsession(BaseSubsession):
 
     def assign_percentile(self):
         self.percentile = []
-        for i in range(0, Constants.players_overall):
-            perci = (i+1)/Constants.players_overall
+        for i in range(0, self.participants):
+            perci = (i+1)/self.participants
             self.percentile.append(perci)
         
     def player_perc(self):
         for p in self.get_players():
-            for i in range(0, Constants.players_overall):
+            for i in range(0, self.participants):
                 if p == self.sorted_d[i][0]:
                     p.perc = self.percentile[i]
                     p.participant.vars['perc'] = p.perc

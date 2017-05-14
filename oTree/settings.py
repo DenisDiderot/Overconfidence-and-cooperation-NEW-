@@ -147,7 +147,7 @@ SESSION_CONFIGS = [
     {
         'name': 'try',
         'display_name': "An attempt",
-        'num_demo_participants': 3,
+        'num_demo_participants': 12,
         'app_sequence': ['quiz', 'public_goods'],
     },
     {
