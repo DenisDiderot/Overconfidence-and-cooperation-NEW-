@@ -139,16 +139,16 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
     {
+        'name': 'try',
+        'display_name': "Overconfidence",
+        'num_demo_participants': 4,
+        'app_sequence': ['quiz', 'public_goods'],
+    },
+    {
         'name': 'Table',
         'display_name': "Strategic Inattention",
         'num_demo_participants': 2,
         'app_sequence': ['Table'],
-    },
-    {
-        'name': 'try',
-        'display_name': "An attempt",
-        'num_demo_participants': 12,
-        'app_sequence': ['quiz', 'public_goods'],
     },
     {
         'name': 'trust',

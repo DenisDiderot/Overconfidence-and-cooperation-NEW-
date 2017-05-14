@@ -18,7 +18,7 @@ See the comment below about how to randomize the order of pages.
 
 class Constants(BaseConstants):
     name_in_url = 'quiz'
-    players_per_group = 3
+    players_per_group = None
 
     with open('quiz/quiz.csv') as f:
         questions = list(csv.DictReader(f))
@@ -27,7 +27,6 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    #d = models.CharField()
     sorted_d = models.CharField()
     percentile = models.CharField()
     participants = models.PositiveIntegerField()
@@ -85,7 +84,7 @@ class Player(BasePlayer):
     is_correct = models.BooleanField()
     count = models.PositiveIntegerField()
     cum_count = models.PositiveIntegerField()
-    perc = models.CharField()
+    perc = models.FloatField()
     
     def current_question(self):
         return self.session.vars['questions'][self.round_number - 1] #Questo essenzialmente chiama un set di domande, il quale verrà poi 

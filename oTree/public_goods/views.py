@@ -8,6 +8,7 @@ class Introduction(Page):
     """Description of the game: How to play and returns expected"""
     def before_next_page(self):
         self.subsession.retrieve_percentile()
+        self.group.define_alpha()
 
 
 class Contribute(Page):
@@ -18,10 +19,10 @@ class Contribute(Page):
 
     timeout_submission = {'contribution': c(Constants.endowment / 2)}
 
-
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         self.group.set_payoffs()
+
 
     body_text = "Waiting for other participants to contribute."
 
