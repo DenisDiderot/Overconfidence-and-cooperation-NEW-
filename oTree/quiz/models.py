@@ -19,7 +19,7 @@ See the comment below about how to randomize the order of pages.
 class Constants(BaseConstants):
     name_in_url = 'quiz'
     players_per_group = 3
-    players_overall = 6                                 #substitute this with number of participants somehow automatic
+    players_overall = 3                                 #substitute this with number of participants somehow automatic
 
     with open('quiz/quiz.csv') as f:
         questions = list(csv.DictReader(f))
@@ -30,6 +30,7 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     #d = models.CharField()
     sorted_d = models.CharField()
+    percentile = models.CharField()
 
 
     def before_session_starts(self):
@@ -53,8 +54,6 @@ class Subsession(BaseSubsession):
             p.question = question_data['question']
             p.solution = question_data['solution']
 
-        
-
     def get_ranking(self):                               #this function should get the results from all participants, rank them and then get the quantile
         d = dict()                                              #PROBLEMS: get the count in dictionary
         for p in self.get_players():
@@ -62,13 +61,17 @@ class Subsession(BaseSubsession):
         self.sorted_d = sorted(d.items(), key=operator.itemgetter(1))
 
     def assign_percentile(self):
+        self.percentile = []
         for i in range(0, Constants.players_overall):
-            percentile = (i+1)/Constants.players_overall
-            perc_tupl = (percentile,)
-            self.sorted_d[i] = self.sorted_d[i] + perc_tupl
-        #self.session.vars['dict'] = self.sorted_d
+            perci = (i+1)/Constants.players_overall
+            self.percentile.append(perci)
         
-
+    def player_perc(self):
+        for p in self.get_players():
+            for i in range(0, Constants.players_overall):
+                if p == self.sorted_d[i][0]:
+                    p.perc = self.percentile[i]
+                    p.participant.vars['perc'] = p.perc
 
 class Group(BaseGroup):
     pass
@@ -81,8 +84,8 @@ class Player(BasePlayer):
     is_correct = models.BooleanField()
     count = models.PositiveIntegerField()
     cum_count = models.PositiveIntegerField()
-    ciao = models.CharField()
-
+    perc = models.CharField()
+    
     def current_question(self):
         return self.session.vars['questions'][self.round_number - 1] #Questo essenzialmente chiama un set di domande, il quale verrà poi 
                                                                      #rinominato question_data. Il -1 è perché il primo elemento è chiaramente 0!
@@ -96,11 +99,6 @@ class Player(BasePlayer):
         if self.is_correct:
             self.count = 1
 
-    def player_perc(self):
-        for j in range(0,6):
-            for i in range(0, Constants.players_overall):
-                if self.subsession.sorted_d[i][0] == self.subsession.get_players()[j]:
-                    #self.ciao = repr(self.subsession.sorted_d[i][0])
-                else:
-                    #self.ciao =  repr(self.subsession.sorted_d[i][0])
-        
+
+
+    

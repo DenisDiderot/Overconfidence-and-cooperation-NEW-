@@ -25,7 +25,10 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass    
+    def retrieve_percentile(self):
+        for p in self.get_players():
+            p.ciao = p.participant.vars['perc']
+
 
 class Group(BaseGroup):
     total_contribution = models.CurrencyField()
@@ -40,7 +43,10 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    ciao = models.CharField()
+
     contribution = models.CurrencyField(
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
     )
+    

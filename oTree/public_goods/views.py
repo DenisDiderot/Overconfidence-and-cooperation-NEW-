@@ -6,7 +6,8 @@ from .models import Constants
 
 class Introduction(Page):
     """Description of the game: How to play and returns expected"""
-    pass
+    def before_next_page(self):
+        self.subsession.retrieve_percentile()
 
 
 class Contribute(Page):

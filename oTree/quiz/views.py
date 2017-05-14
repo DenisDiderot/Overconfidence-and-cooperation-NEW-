@@ -44,16 +44,12 @@ class Results(Page):
     def before_next_page(self):
         self.subsession.get_ranking()
         self.subsession.assign_percentile()
-        self.player.player_perc()
+        self.subsession.player_perc()
 
 class Halfway(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
-    def before_next_page(self):
-        self.player.player_perc()
-
-
-
+    
 
 page_sequence = [
     Question,
