@@ -24,6 +24,7 @@ class Constants(BaseConstants):
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
+    options = [('A',''), ('B', '')]
 
 
 class Subsession(BaseSubsession):
@@ -98,7 +99,8 @@ class Player(BasePlayer):
         self.count = 0
         if self.is_correct:
             self.count = 1
-
-
+    ### ADJUST HERE ###
+    for elem in q_confidence_list:
+        elem = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
 
     

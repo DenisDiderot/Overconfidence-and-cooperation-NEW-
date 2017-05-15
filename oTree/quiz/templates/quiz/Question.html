@@ -7,6 +7,18 @@
 
 {% block content %}
 
+    <p>
+        {% if player.round_number == 5 %}
+
+        	<img src="{% static "quiz/Beppuzzo.jpg" %}"/>
+
+        {% elif player.round_number == 4 %}
+
+			<img src="{% static "quiz/Zio_paperone.gif" %}"/>        
+
+        {% endif %}
+    </p>
+
     {% formfield player.submitted_answer with label=player.question %}
 
     {% next_button %}

@@ -49,11 +49,19 @@ class Results(Page):
 class Halfway(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
+
+class Elicitation(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+        
+    form_model = models.Player
+    form_fields = ['q_elicitation']
     
 
 page_sequence = [
     Question,
     BeginWaitPage,
     Results,
+    Elicitation,
     Halfway,
 ]
