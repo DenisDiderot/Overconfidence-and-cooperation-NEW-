@@ -89,7 +89,7 @@ class Player(BasePlayer):
     estimate = models.PositiveIntegerField()
     guy = models.CharField()
     relative = models.FloatField(
-        min=0, max=1, doc="""Estimate of own ranking""")
+        min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
 
 
@@ -123,9 +123,9 @@ class Player(BasePlayer):
             self.guy = "Underconfident"
 
     def identify_rel_overconfident(self):
-        if self.relative > self.perc:
+        if (self.relative)/100 > self.perc:
             self.guy_relative = "Relative Overconfident"
-        if self.relative == self.perc:
+        if (self.relative)/100 == self.perc:
             self.guy_relative = "Relative on spot"
         else:
             self.guy_relative = "Relative underconfident"

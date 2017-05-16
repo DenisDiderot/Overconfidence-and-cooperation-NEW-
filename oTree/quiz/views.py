@@ -54,6 +54,7 @@ class Halfway(Page):
 
     def before_next_page(self):
         self.player.identify_overconfident()
+        self.player.identify_rel_overconfident()
 
 
 class Elicitation(Page):
