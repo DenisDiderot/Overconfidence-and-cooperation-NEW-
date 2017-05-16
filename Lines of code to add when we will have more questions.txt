@@ -1,0 +1,25 @@
+<!-- <tr>
+            <td class="tg-031e">Lottery that gives me with probability 6/10</td>
+            <td class="tg-031e">{% formfield player.q_conf_6 with label="" %}</td>
+            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
+        </tr>
+        <tr>
+            <td class="tg-031e">Lottery that gives me with probability 7/10</td>
+            <td class="tg-031e">{% formfield player.q_conf_7 with label="" %}</td>
+            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
+        </tr>
+        <tr>
+            <td class="tg-031e">Lottery that gives me with probability 8/10</td>
+            <td class="tg-031e">{% formfield player.q_conf_8 with label="" %}</td>
+            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
+        </tr>
+        <tr>
+            <td class="tg-031e">Lottery that gives me with probability 9/10</td>
+            <td class="tg-031e">{% formfield player.q_conf_9 with label="" %}</td>
+            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
+        </tr>
+        <tr>
+            <td class="tg-031e">Lottery that gives me with probability 10/10</td>
+            <td class="tg-031e">{% formfield player.q_conf_10 with label="" %}</td>
+            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
+        </tr> -->

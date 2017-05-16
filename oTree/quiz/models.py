@@ -86,7 +86,13 @@ class Player(BasePlayer):
     count = models.PositiveIntegerField()
     cum_count = models.PositiveIntegerField()
     perc = models.FloatField()
-    
+    estimate = models.PositiveIntegerField()
+    guy = models.CharField()
+    relative = models.FloatField(
+        min=0, max=1, doc="""Estimate of own ranking""")
+    guy_relative = models.CharField()
+
+
     def current_question(self):
         return self.session.vars['questions'][self.round_number - 1] #Questo essenzialmente chiama un set di domande, il quale verrà poi 
                                                                      #rinominato question_data. Il -1 è perché il primo elemento è chiaramente 0!
@@ -99,8 +105,51 @@ class Player(BasePlayer):
         self.count = 0
         if self.is_correct:
             self.count = 1
-    ### ADJUST HERE ###
-    for elem in q_confidence_list:
-        elem = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
 
+    def count_overconfidence(self):
+        d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5]#, 
+        #self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
+        self.estimate = 0
+        for i in range(0,5):
+            if d[i] == 'A':
+                self.estimate += 1
+
+    def identify_overconfident(self):
+        if self.estimate > self.cum_count:
+            self.guy = "Overconfident"
+        elif self.estimate == self.cum_count:
+            self.guy = "On spot"
+        else:
+            self.guy = "Underconfident"
+
+    def identify_rel_overconfident(self):
+        if self.relative > self.perc:
+            self.guy_relative = "Relative Overconfident"
+        if self.relative == self.perc:
+            self.guy_relative = "Relative on spot"
+        else:
+            self.guy_relative = "Relative underconfident"
     
+    # d = models.CharField
+
+    # def create_questions(self):
+    #     self.d = {}
+    #     for x in range(1,11):
+    #         self.d["q_confidence{0}".format(x)] = models.CharField(initial=None, 
+    #             choices = Constants.options, 
+    #             widget=widgets.RadioSelectHorizontal())
+
+    q_conf_1 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    q_conf_2 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    q_conf_3 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    q_conf_4 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    q_conf_5 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    # q_conf_6 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    # q_conf_7 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    # q_conf_8 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    # q_conf_9 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+    # q_conf_10 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
+ 
+    
+    # for i in range(0,10):
+    #     d[i] = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())

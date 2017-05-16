@@ -1,0 +1,14 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Relative
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.relative with label="In which percentile do you think you are?" %}
+
+    {% next_button %}
+
+{% endblock %}

@@ -19,7 +19,7 @@
     <p>
         Now you are going to be asked to choose between the following pair of alternatives.
     </p>
-
+    
     <table class="tg">
         <tr>
             <th colspan="3"> Choose between the following alternatives, one per each pair. A lottery with probability p of winning and an
@@ -27,56 +27,32 @@
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives me with probability 1/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
+            <td class="tg-031e">{% formfield player.q_conf_1 with label="" %}</td>
             <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives me with probability 2/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
+            <td class="tg-031e">{% formfield player.q_conf_2 with label="" %}</td>
             <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives me with probability 3/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
+            <td class="tg-031e">{% formfield player.q_conf_3 with label="" %}</td>
             <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives me with probability 4/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
+            <td class="tg-031e">{% formfield player.q_conf_4 with label="" %}</td>
             <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives me with probability 5/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
+            <td class="tg-031e">{% formfield player.q_conf_5 with label="" %}</td>
             <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
         </tr>
-        <tr>
-            <td class="tg-031e">Lottery that gives me with probability 6/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
-            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
-        </tr>
-        <tr>
-            <td class="tg-031e">Lottery that gives me with probability 7/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
-            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
-        </tr>
-        <tr>
-            <td class="tg-031e">Lottery that gives me with probability 8/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
-            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
-        </tr>
-        <tr>
-            <td class="tg-031e">Lottery that gives me with probability 9/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
-            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
-        </tr>
-        <tr>
-            <td class="tg-031e">Lottery that gives me with probability 10/10</td>
-            <td class="tg-031e">{% formfield player.q_elicitation with label="" %}</td>
-            <td class="tg-031e">Pick one random card. If correct get 10, otherwise nothing</td>
-        </tr>
+        
     </table>
- 
+
     
 
     {% next_button %}
