@@ -74,6 +74,11 @@ class Subsession(BaseSubsession):
                     p.perc = self.percentile[i]
                     p.participant.vars['perc'] = p.perc
 
+    def save_variables(self):
+        for p in self.get_players():
+            p.participant.vars['estimate'] = p.estimate
+            p.participant.vars['relative'] = p.relative
+
 class Group(BaseGroup):
     pass
 
