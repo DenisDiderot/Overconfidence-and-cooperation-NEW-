@@ -27,35 +27,48 @@
         </tr> -->
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 20%</td>
-            <td class="tg-031e">{% formfield player.q_conf_1 with label="" %}</td>
+            <td id="1">{% formfield player.q_conf_1 with label="" %}</td>
             <td class="tg-031e">Pick one random question from stage 1. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 40%</td>
-            <td class="tg-031e">{% formfield player.q_conf_2 with label="" %}</td>
+            <td id="2">{% formfield player.q_conf_2 with label="" %}</td>
             <td class="tg-031e">Pick one random question from stage 1. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 60%</td>
-            <td class="tg-031e">{% formfield player.q_conf_3 with label="" %}</td>
+            <td id="3">{% formfield player.q_conf_3 with label="" %}</td>
             <td class="tg-031e">Pick one random question from stage 1. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 80%</td>
-            <td class="tg-031e">{% formfield player.q_conf_4 with label="" %}</td>
+            <td id="4">{% formfield player.q_conf_4 with label="" %}</td>
             <td class="tg-031e">Pick one random question from stage 1. If correct get 10, otherwise nothing</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 100%</td>
-            <td class="tg-031e">{% formfield player.q_conf_5 with label="" %}</td>
+            <td id="5">{% formfield player.q_conf_5 with label="" %}</td>
             <td class="tg-031e">Pick one random question from stage 1. If correct get 10, otherwise nothing</td>
         </tr>
         
-    </table>
-
-    
+    </table>   
 
     {% next_button %}
 {% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript">
+    for (var i = 0; i < 6; i++) {
+        if(document.getElementById("id_q_conf_" + i + "_2").checked){
+            for (var j = i; j < 6; j++) {
+                if(document.getElementById("id_q_conf_" + j + "_1").checked){
+                    alert("I am an alert box!");    
+                }          
+            };
+        }                   
+    }
 
+
+
+    </script>
+{% endblock %}

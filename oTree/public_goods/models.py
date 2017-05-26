@@ -18,7 +18,7 @@ class Constants(BaseConstants):
 
     # """Amount allocated to each player"""
     endowment = c(100)
-    individual_return = 2                                               #To be substituted at some point with the actual alpha
+    individual_return = 1                                               #To be substituted at some point with the actual alpha
 
 
 

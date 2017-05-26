@@ -135,14 +135,18 @@ class Player(BasePlayer):
         else:
             self.guy_relative = "Relative underconfident"
     
-    # d = models.CharField
+    def something(self):
+        for i in range(1,6):
+            setattr(self, "q_conf_{0}".format(i), models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal()))
 
-    # def create_questions(self):
-    #     self.d = {}
-    #     for x in range(1,11):
-    #         self.d["q_confidence{0}".format(x)] = models.CharField(initial=None, 
-    #             choices = Constants.options, 
-    #             widget=widgets.RadioSelectHorizontal())
+    def check_and_adjust(self):
+        for i in range(1,6):
+            if getattr(self, "q_conf_{0}".format(i)) == 'B':
+                for j in range(i, 6):
+                    setattr(self, "q_conf_{0}".format(j), 'B')
+       
+
+
 
     q_conf_1 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_2 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
