@@ -55,14 +55,14 @@ class Subsession(BaseSubsession):
 
         self.participants = len(self.get_players())
 
-    def get_ranking(self):                               #this function should get the results from all participants, rank them and then get the quantile
-        d = dict()                                              #PROBLEMS: get the count in dictionary
+    def get_ranking(self):                                
+        d = dict()                                        
         for p in self.get_players():
             d[p] = p.cum_count
         self.sorted_d = sorted(d.items(), key=operator.itemgetter(1))
 
-    def assign_percentile(self):
-        self.percentile = []
+    def assign_percentile(self):                          #One problem here could be to deal with the draws. Just tell them? With many participants
+        self.percentile = []                              #and question should not be big issue
         for i in range(0, self.participants):
             perci = (i+1)/self.participants
             self.percentile.append(perci)
@@ -74,7 +74,7 @@ class Subsession(BaseSubsession):
                     p.perc = self.percentile[i]
                     p.participant.vars['perc'] = p.perc
 
-    def save_variables(self):
+    def save_variables(self):                                   #non dovrebbe più essere rilevante
         for p in self.get_players():
             p.participant.vars['estimate'] = p.estimate
             p.participant.vars['relative'] = p.relative
@@ -111,7 +111,7 @@ class Player(BasePlayer):
         if self.is_correct:
             self.count = 1
 
-    def count_overconfidence(self):
+    def count_overconfidence(self):                                                         #da spostare
         d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5]#, 
         #self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
         self.estimate = 0
@@ -119,7 +119,7 @@ class Player(BasePlayer):
             if d[i] == 'A':
                 self.estimate += 1
 
-    def identify_overconfident(self):
+    def identify_overconfident(self):                                       #da spostare e cambiare
         if self.estimate > self.cum_count:
             self.guy = "Overconfident"
         elif self.estimate == self.cum_count:

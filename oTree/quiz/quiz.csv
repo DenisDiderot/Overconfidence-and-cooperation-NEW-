@@ -1,6 +1,21 @@
-id,question,choice1,choice2,choice3,choice4,solution
-1,What is the capital of China?,Shanghai,Guangzhou,Hong Kong,Beijing,Beijing
-2,What year did World War 1 start?,1896,1914,1921,1929,1914
-3,What is the second closest planet to the sun?,Saturn,Mercury,Venus,Mars,Venus
-4,What is the symbol for gold on the periodic table?,Au,Gd,Gl,Or,Au
-5,What is the World's population updated to April 2017?,6.8 bn,7.1bn,7.3bn,7.5bn,7.5bn
+id,question,choice1,choice2,choice3,choice4,choice5,choice6,solution
+1,How do you complete the sequence?,A,B,C,D,E,F,A
+2,How do you complete the sequence?,A,B,C,D,E,F,A
+3,How do you complete the sequence?,A,B,C,D,E,F,A
+4,How do you complete the sequence?,A,B,C,D,E,F,A
+5,How do you complete the sequence?,A,B,C,D,E,F,A
+6,How do you complete the sequence?,A,B,C,D,E,F,A
+7,How do you complete the sequence?,A,B,C,D,E,F,A
+8,How do you complete the sequence?,A,B,C,D,E,F,A
+9,How do you complete the sequence?,A,B,C,D,E,F,A
+10,How do you complete the sequence?,A,B,C,D,E,F,A
+11,How do you complete the sequence?,A,B,C,D,E,F,A
+12,How do you complete the sequence?,A,B,C,D,E,F,A
+13,How do you complete the sequence?,A,B,C,D,E,F,A
+14,How do you complete the sequence?,A,B,C,D,E,F,A
+15,How do you complete the sequence?,A,B,C,D,E,F,A
+16,How do you complete the sequence?,A,B,C,D,E,F,A
+17,How do you complete the sequence?,A,B,C,D,E,F,A
+18,How do you complete the sequence?,A,B,C,D,E,F,A
+19,How do you complete the sequence?,A,B,C,D,E,F,A
+20,How do you complete the sequence?,A,B,C,D,E,F,A

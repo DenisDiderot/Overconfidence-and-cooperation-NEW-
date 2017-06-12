@@ -13,6 +13,7 @@ class Beginning(Page):
 class Question(Page):
     form_model = models.Player
     form_fields = ['submitted_answer']
+    #context['loop_times'] = range(1, 5)
 
     def submitted_answer_choices(self):
         qd = self.player.current_question()
@@ -21,6 +22,8 @@ class Question(Page):
             qd['choice2'],
             qd['choice3'],
             qd['choice4'],
+            qd['choice5'],
+            qd['choice6']
         ]
 
     def before_next_page(self):
