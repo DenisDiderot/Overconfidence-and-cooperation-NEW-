@@ -2,18 +2,31 @@ from otree.api import Currency as c, currency_range
 from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
+import time
 
 class Beginning(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    # def before_next_page(self):
-    #     self.player.something()
+    def before_next_page(self):
+        # user has 5 minutes to complete as many pages as possible
+        self.participant.vars['expiry_timestamp'] = time.time() + 100
 
 class Question(Page):
     form_model = models.Player
     form_fields = ['submitted_answer']
-    #context['loop_times'] = range(1, 5)
+    timer_text = 'Time left to complete this section:'
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry_timestamp'] - time.time()
+
+
+    def vars_for_template(self):
+        roundd = self.round_number
+        timer = self.participant.vars['expiry_timestamp'] - time.time()
+        return{
+            'round' : roundd,
+            'timer' : timer
+        }
 
     def submitted_answer_choices(self):
         qd = self.player.current_question()
@@ -25,6 +38,9 @@ class Question(Page):
             qd['choice5'],
             qd['choice6']
         ]
+
+    def is_displayed(self):
+        return self.participant.vars['expiry_timestamp'] - time.time() > 3
 
     def before_next_page(self):
         self.player.check_correct()

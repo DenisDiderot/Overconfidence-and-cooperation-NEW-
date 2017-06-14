@@ -36,17 +36,7 @@ class Subsession(BaseSubsession):
         self.group_randomly()
         if self.round_number == 1:
             self.session.vars['questions'] = Constants.questions    #Qui si assegnano le questions dal CSV al session.vars
-            ## ALTERNATIVE DESIGN:
-            ## to randomize the order of the questions, you could instead do:
-
-            # import random
-            # randomized_questions = random.sample(Constants.questions, len(Constants.questions))
-            # self.session.vars['questions'] = randomized_questions
-
-            ## and to randomize differently for each participant, you could use
-            ## the random.sample technique, but assign into participant.vars
-            ## instead of session.vars.
-
+        
         for p in self.get_players():                    #crea un pool per ogni round essenzialmente, da questo estrapola id, question e solution
             question_data = p.current_question()        #le choice vengono chiamate in views allo stesso modo
             p.question_id = question_data['id']

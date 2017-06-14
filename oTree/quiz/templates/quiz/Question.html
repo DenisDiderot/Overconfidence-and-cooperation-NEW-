@@ -7,17 +7,19 @@
 
 {% block content %}
 
-    <p>
-        
-    	{% if player.round_number == 1 %}
+<!-- 	<script type="text/javascript">
+		var round = {{ round|safe }};
+		function ShowImage(ciao){
+			document.canvas.src = '{% static "quiz/2.jpg" %}';
+		}
 
-			<img src="{% static "quiz/1.jpg" %}" height="200" width="400" />
-			<img src="{% static "quiz/1R.jpg" %}"  height="150" width="300"/>
-			
+		window.onload = ShowImage(round);
+	</script> -->
+	<p> Hey, look at the time left! {{ timer }}	seconds </p>
+    
 
-		{% endif %}
-		
-    </p>
+    <img src='{% static "quiz/1.jpg" %}' name = "canvas" height="200" width="400" />
+    <img src='{% static "quiz/1R.jpg" %}' height="150" width="300"/>
 
     
     {% formfield player.submitted_answer with label=player.question %}
@@ -25,3 +27,4 @@
     {% next_button %}
 
 {% endblock %}
+
