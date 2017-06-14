@@ -8,24 +8,24 @@ class Beginning(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    def before_next_page(self):
-        # user has 5 minutes to complete as many pages as possible
-        self.participant.vars['expiry_timestamp'] = time.time() + 100
+    # def before_next_page(self):
+    #     # user has 5 minutes to complete as many pages as possible
+    #     self.participant.vars['expiry_timestamp'] = time.time() + 10
 
 class Question(Page):
     form_model = models.Player
     form_fields = ['submitted_answer']
-    timer_text = 'Time left to complete this section:'
-    def get_timeout_seconds(self):
-        return self.participant.vars['expiry_timestamp'] - time.time()
+    # timer_text = 'Time left to complete this section:'
+    # def get_timeout_seconds(self):
+    #     return self.participant.vars['expiry_timestamp'] - time.time()
 
 
     def vars_for_template(self):
         roundd = self.round_number
-        timer = self.participant.vars['expiry_timestamp'] - time.time()
+        # timer = self.participant.vars['expiry_timestamp'] - time.time()
         return{
             'round' : roundd,
-            'timer' : timer
+            # 'timer' : timer
         }
 
     def submitted_answer_choices(self):
@@ -39,8 +39,8 @@ class Question(Page):
             qd['choice6']
         ]
 
-    def is_displayed(self):
-        return self.participant.vars['expiry_timestamp'] - time.time() > 3
+    # def is_displayed(self):
+    #     return self.participant.vars['expiry_timestamp'] - time.time() > 3
 
     def before_next_page(self):
         self.player.check_correct()
@@ -58,40 +58,6 @@ class BeginWaitPage(WaitPage):
     template_name = 'quiz/BeginWaitPage.html'
 
 
-class Elicitation(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-
-    def before_next_page(self):
-        self.player.count_overconfidence()
-        self.subsession.get_ranking()
-        self.subsession.assign_percentile()
-        self.subsession.player_perc()
-        self.player.check_and_adjust()
-
-    form_model = models.Player
-    form_fields = ['q_conf_1','q_conf_2','q_conf_3','q_conf_4','q_conf_5']#,'q_conf_6',
-    #'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
-
-
-class Relative(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-    
-    form_model = models.Player
-    form_fields = ['relative']        
-
-
-class Halfway(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-
-    def before_next_page(self):
-        self.player.identify_overconfident()
-        self.player.identify_rel_overconfident()
-        self.subsession.save_variables()
-
-
 class Results(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
@@ -102,15 +68,18 @@ class Results(Page):
         return {
             'player_in_all_rounds': player_in_all_rounds,
             'questions_correct': summ
-        }       
+        }  
+
+    def before_next_page(self):
+        self.subsession.get_ranking()               #LASCIA IN QUIZ
+        self.subsession.assign_percentile()         #LASCIA IN QUIZ
+        self.subsession.player_perc()               #LASCIA IN QUIZ
+        self.subsession.save_variables()
 
 
 page_sequence = [
     Beginning,
     Question,
     BeginWaitPage,
-    Elicitation,
-    Relative,
-    Halfway,
     Results,
 ]

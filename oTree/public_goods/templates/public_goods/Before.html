@@ -1,0 +1,12 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block content  %}
+	<p> Now to Elicitation</p>
+    {% next_button %}
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}
