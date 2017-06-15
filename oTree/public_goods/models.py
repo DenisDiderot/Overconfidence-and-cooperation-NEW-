@@ -3,8 +3,7 @@ from otree.api import (
     Currency as c, currency_range
 )
 import random
-from decimal import *
-getcontext()
+
 
 doc = """
 This is a one-period public goods game with 3 players.
@@ -20,7 +19,8 @@ class Constants(BaseConstants):
     options = [('A',''), ('B', '')] 
     # """Amount allocated to each player"""
     endowment = c(100)
-    individual_return = 1                                               #To be substituted at some point with the actual alpha
+    
+    individual_alpha = 0.5                                              #To be substituted at some point with the actual alpha
                     
 
 
@@ -100,7 +100,7 @@ class Player(BasePlayer):
        
 
 
-    # da spostare -->
+
     q_conf_1 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_2 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_3 = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())

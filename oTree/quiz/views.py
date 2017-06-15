@@ -9,27 +9,21 @@ class Beginning(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    # def before_next_page(self):
-    #     # user has 5 minutes to complete as many pages as possible
-    #     self.participant.vars['expiry_timestamp'] = time.time() + 20
-
+    
 class Question(GTOPage):
     form_model = models.Player
     form_fields = ['submitted_answer']
     timer_text = 'Time left to complete this section:'
     general_timeout = True
 
-    # def get_timeout_seconds(self):
-    #     return self.participant.vars['expiry_timestamp'] - time.time()
-
 
     def gto_vars_for_template(self):
         roundd = self.round_number
-        #timer = self.participant.vars['expiry_timestamp'] - time.time()
         
         return{
             'round' : roundd,
-            #'timer' : timer
+            'image_path1' : 'quiz/{}.jpg'.format(self.round_number),
+            'image_path2' : 'quiz/{}R.jpg'.format(self.round_number),
         }
 
     def submitted_answer_choices(self):
@@ -43,13 +37,10 @@ class Question(GTOPage):
             qd['choice6']
         ]
 
-    # def gto_is_displayed(self):
-    #     return self.participant.vars['expiry_timestamp'] - time.time() > 3
-
     def before_next_page(self):
         self.player.check_correct()
         self.player.count_correct()
-        #self.subsession.check_none()
+        
 
 class BeginWaitPage(WaitPage):
     def is_displayed(self):

@@ -7,23 +7,13 @@
 
 {% block content %}
 
-<!-- 	<script type="text/javascript">
-		var round = {{ round|safe }};
-		function ShowImage(){
-			document.canvas.src = '{% static "quiz/2.jpg" %}';
-		}
-
-		/*window.onload = ShowImage(round);*/
-	</script> -->
-	
-	
-    <img src='{% static "quiz/1.jpg" %}' name = "canvas" height="200" width="400" />
-    <img src='{% static "quiz/1R.jpg" %}' name = "canvas2" height="150" width="300"/>
+    <img src="{% static image_path1 %}" height="200" width="400" />
+    <img src="{% static image_path2 %}"  height="150" width="300"/>
 
     
     {% formfield player.submitted_answer with label=player.question %}
 
-    <button id="next" class="btn btn-primary btn-large btn-block nextbutton" onclick="ShowImage()"> Next </button>
+    {% next_button %}
 
 {% endblock %}
 
