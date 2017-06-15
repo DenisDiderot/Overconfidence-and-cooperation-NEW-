@@ -24,7 +24,7 @@ class Constants(BaseConstants):
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
-    gto_seconds = 20
+    gto_seconds = 200
     overallrounds = True
 
 class Subsession(BaseSubsession):

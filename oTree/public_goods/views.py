@@ -5,19 +5,33 @@ from .models import Constants
 
 
 class Introduction(Page):
-    """Description of the game: How to play and returns expected"""
+    """Description of the game. Obtain the alpha and the info condition."""
     def before_next_page(self):
-        self.subsession.retrieve_percentile()
         self.group.define_alpha()
 
+class Information(Page):
+    """Here the player will be informed on the information condition he's into. Obtain the mpcr."""
+
+    def before_next_page(self):
+        self.group.define_return()
+
+    def vars_for_template(self):
+        return{
+            'info_condition': self.group.info,
+        }
 
 class Contribute(Page):
-    """Player: Choose how much to contribute"""
+    """Player will be informed about mpcr and decide contribution."""
 
     form_model = models.Player
     form_fields = ['contribution']
 
     timeout_submission = {'contribution': c(Constants.endowment / 2)}
+
+    def vars_for_template(self):
+        return{
+            'mpcr': self.group.mpcr,
+        }
 
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -50,7 +64,6 @@ class Elicitation(Page):
 
     def before_next_page(self):
         self.player.count_overconfidence()
-        
         self.player.check_and_adjust()
 
     form_model = models.Player
@@ -58,12 +71,12 @@ class Elicitation(Page):
     #'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
 
 
-class Relative(Page):
-    def is_displayed(self):
-        return self.round_number == 1
+# class Relative(Page):
+#     def is_displayed(self):
+#         return self.round_number == 1
     
-    form_model = models.Player
-    form_fields = ['relative']        
+#     form_model = models.Player
+#     form_fields = ['relative']        
 
 
 class Halfway(Page):
@@ -71,7 +84,6 @@ class Halfway(Page):
         return self.round_number == 1
 
     def before_next_page(self):
-        #self.player.identify_overconfident()
         self.player.identify_rel_overconfident()
         
 
@@ -82,6 +94,7 @@ page_sequence = [
     #Relative,      # QUA INTANTO LA TIRIAMO VIA, POTREBBE TORNARE UTILE MAGARI CHIEDERE QUANTE GIUSTE (INVERTIRE RISPETTO A PRIMA)
     Halfway,
     Introduction,
+    Information,
     Contribute,
     ResultsWaitPage,
     Results

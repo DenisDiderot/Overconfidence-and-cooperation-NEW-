@@ -13,7 +13,7 @@ This is a one-period public goods game with 3 players.
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 4
 
     instructions_template = 'public_goods/Instructions.html'
     options = [('A',''), ('B', '')] 
@@ -21,7 +21,8 @@ class Constants(BaseConstants):
     endowment = c(100)
     
     individual_alpha = 0.5                                              #To be substituted at some point with the actual alpha
-                    
+    
+    information_condition = ["Bel", "Act", "No", "Ctrl"]                        #The four information condition that the players will face
 
 
 
@@ -36,13 +37,22 @@ class Group(BaseGroup):
     total_contribution = models.CurrencyField()
     individual_share = models.CurrencyField()
     alpha = models.FloatField()
+    info = models.CharField()
+    mpcr = models.FloatField()
 
     def define_alpha(self):
         self.alpha = sum(p.percentile for p in self.get_players())
+        self.info = random.choice(Constants.information_condition)                         #RICORDATI DI CAMBIARE QUESTA AD UN CERTO PUNTO, SENZA REINSERIMENTO!!!
+
+    def define_return(self):
+        if self.info == "Ctrl":
+            self.mpcr = Constants.individual_alpha
+        else:
+            self.mpcr = Constants.individual_alpha*(self.alpha)
 
     def set_payoffs(self):
         self.total_contribution = sum([p.contribution for p in self.get_players()])
-        self.individual_share = self.total_contribution * Constants.individual_return
+        self.individual_share = self.total_contribution * Constants.individual_return       ##### QUI BISOGNA AGGIUSTARE CON LA NUOVA DEFINIZIONE DI MPCR ######
         for p in self.get_players():
             p.payoff = (Constants.endowment - p.contribution) + self.individual_share
 
