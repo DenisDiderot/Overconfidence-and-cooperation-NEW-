@@ -24,12 +24,14 @@ class Constants(BaseConstants):
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
-
+    gto_seconds = 20
+    overallrounds = True
 
 class Subsession(BaseSubsession):
     sorted_d = models.CharField()
     percentile = models.CharField()
     participants = models.PositiveIntegerField()
+    testing = models.CharField()
     
     def before_session_starts(self):
         self.group_randomly()
@@ -63,9 +65,14 @@ class Subsession(BaseSubsession):
                     p.perc = self.percentile[i]
                     p.participant.vars['perc'] = p.perc
 
-    def save_variables(self):                                   #non dovrebbe più essere rilevante
+    def check_none(self):                                   #non dovrebbe più essere rilevante
         for p in self.get_players():
-            p.participant.vars['cumcount'] = p.cum_count
+            for g in p.in_all_rounds():
+                if g.count is None:
+                    g.count = 0
+                    g.is_correct = False
+                    g.testing = "error"
+
             
 
 class Group(BaseGroup):
@@ -80,7 +87,8 @@ class Player(BasePlayer):
     count = models.PositiveIntegerField()
     cum_count = models.PositiveIntegerField()
     perc = models.FloatField()
-    #SPOSTA TUTTO QUELLO CHE STA QUA SOTTO
+    testing = models.CharField()
+    
     
 
     def current_question(self):

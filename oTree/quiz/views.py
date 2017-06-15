@@ -2,6 +2,7 @@ from otree.api import Currency as c, currency_range
 from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
+from .gto_timeout_page import GTOPage
 import time
 
 class Beginning(Page):
@@ -10,22 +11,25 @@ class Beginning(Page):
 
     # def before_next_page(self):
     #     # user has 5 minutes to complete as many pages as possible
-    #     self.participant.vars['expiry_timestamp'] = time.time() + 10
+    #     self.participant.vars['expiry_timestamp'] = time.time() + 20
 
-class Question(Page):
+class Question(GTOPage):
     form_model = models.Player
     form_fields = ['submitted_answer']
-    # timer_text = 'Time left to complete this section:'
+    timer_text = 'Time left to complete this section:'
+    general_timeout = True
+
     # def get_timeout_seconds(self):
     #     return self.participant.vars['expiry_timestamp'] - time.time()
 
 
-    def vars_for_template(self):
+    def gto_vars_for_template(self):
         roundd = self.round_number
-        # timer = self.participant.vars['expiry_timestamp'] - time.time()
+        #timer = self.participant.vars['expiry_timestamp'] - time.time()
+        
         return{
             'round' : roundd,
-            # 'timer' : timer
+            #'timer' : timer
         }
 
     def submitted_answer_choices(self):
@@ -39,16 +43,13 @@ class Question(Page):
             qd['choice6']
         ]
 
-    # def is_displayed(self):
+    # def gto_is_displayed(self):
     #     return self.participant.vars['expiry_timestamp'] - time.time() > 3
 
     def before_next_page(self):
         self.player.check_correct()
         self.player.count_correct()
-        self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
-
-        #self.player.create_questions()
-
+        #self.subsession.check_none()
 
 class BeginWaitPage(WaitPage):
     def is_displayed(self):
@@ -57,6 +58,14 @@ class BeginWaitPage(WaitPage):
     wait_for_all_groups = True
     template_name = 'quiz/BeginWaitPage.html'
 
+class AfterWait(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    def before_next_page(self):
+        self.subsession.check_none()
+        self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
+
 
 class Results(Page):
     def is_displayed(self):
@@ -64,7 +73,7 @@ class Results(Page):
 
     def vars_for_template(self):
         player_in_all_rounds = self.player.in_all_rounds()
-        summ = sum([p.is_correct for p in player_in_all_rounds])
+        summ = sum([p.count for p in player_in_all_rounds])
         return {
             'player_in_all_rounds': player_in_all_rounds,
             'questions_correct': summ
@@ -74,12 +83,12 @@ class Results(Page):
         self.subsession.get_ranking()               #LASCIA IN QUIZ
         self.subsession.assign_percentile()         #LASCIA IN QUIZ
         self.subsession.player_perc()               #LASCIA IN QUIZ
-        self.subsession.save_variables()
-
+        
 
 page_sequence = [
     Beginning,
     Question,
     BeginWaitPage,
+    AfterWait,
     Results,
 ]

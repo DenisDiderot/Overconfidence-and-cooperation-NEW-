@@ -17,11 +17,11 @@ class Constants(BaseConstants):
     num_rounds = 1
 
     instructions_template = 'public_goods/Instructions.html'
-
+    options = [('A',''), ('B', '')] 
     # """Amount allocated to each player"""
     endowment = c(100)
     individual_return = 1                                               #To be substituted at some point with the actual alpha
-    options = [('A',''), ('B', '')]                 #SPOSTA
+                    
 
 
 
@@ -29,7 +29,7 @@ class Subsession(BaseSubsession):
     def retrieve_percentile(self):
         for p in self.get_players():
             p.percentile = p.participant.vars['perc']
-            p.cum_count = p.participant.vars['cumcount']
+            #p.cum_count = p.participant.vars['cumcount']
 
 
 class Group(BaseGroup):
@@ -48,8 +48,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    percentile = models.CharField()
-    estimate = models.CharField()
+    percentile = models.FloatField()
+    estimate = models.FloatField()
     contribution = models.CurrencyField(
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
@@ -67,6 +67,8 @@ class Player(BasePlayer):
         for i in range(0,5):
             if d[i] == 'A':
                 self.estimate += 0.20
+        #estimate_float = float(estimate)
+
 
     # def identify_overconfident(self):                                                       #da spostare e cambiare
     #     if self.estimate > self.cum_count:
@@ -77,14 +79,14 @@ class Player(BasePlayer):
     #         self.guy = "Underconfident"
 
     def identify_rel_overconfident(self):                                                    #da spostare
-        if Decimal(self.estimate) > Decimal(self.percentile):
-            self.guy_relative = "Relative Overconfident"
-        if Decimal(self.estimate) == Decimal(self.percentile):
-            self.guy_relative = "Relative on spot"
-        if Decimal(self.estimate) < Decimal(self.percentile):
-            self.guy_relative = "Relative underconfident"
+        if self.estimate > self.percentile:
+            self.guy_relative = "Overconfident"
+        elif self.estimate == self.percentile:
+            self.guy_relative = "On spot"
+        elif self.estimate < self.percentile:
+            self.guy_relative = "Underconfident"
         else:
-            self.guy_relative = "ERROR"
+            self.guy_relative = "{}{}".format(type(self.estimate), type(self.percentile))
     
     # def something(self):                
     #     for i in range(1,6):

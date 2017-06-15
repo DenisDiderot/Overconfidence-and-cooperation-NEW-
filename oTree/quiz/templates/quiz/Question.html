@@ -9,22 +9,21 @@
 
 <!-- 	<script type="text/javascript">
 		var round = {{ round|safe }};
-		function ShowImage(ciao){
+		function ShowImage(){
 			document.canvas.src = '{% static "quiz/2.jpg" %}';
 		}
 
-		window.onload = ShowImage(round);
+		/*window.onload = ShowImage(round);*/
 	</script> -->
-	<p> Hey, look at the time left! {{ timer }}	seconds </p>
-    
-
+	
+	
     <img src='{% static "quiz/1.jpg" %}' name = "canvas" height="200" width="400" />
-    <img src='{% static "quiz/1R.jpg" %}' height="150" width="300"/>
+    <img src='{% static "quiz/1R.jpg" %}' name = "canvas2" height="150" width="300"/>
 
     
     {% formfield player.submitted_answer with label=player.question %}
 
-    {% next_button %}
+    <button id="next" class="btn btn-primary btn-large btn-block nextbutton" onclick="ShowImage()"> Next </button>
 
 {% endblock %}
 
