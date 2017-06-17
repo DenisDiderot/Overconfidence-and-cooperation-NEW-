@@ -46,7 +46,7 @@ class Results(Page):
 
     def vars_for_template(self):
         return {
-            'total_earnings': self.group.total_contribution * (Constants.individual_return * Constants.players_per_group),
+            'total_earnings': self.group.total_contribution * (self.group.mpcr * Constants.players_per_group),
         }
 
 class Before(Page):
@@ -65,10 +65,12 @@ class Elicitation(Page):
     def before_next_page(self):
         self.player.count_overconfidence()
         self.player.check_and_adjust()
+        self.player.percentile_other_guy()
 
     form_model = models.Player
-    form_fields = ['q_conf_1','q_conf_2','q_conf_3','q_conf_4','q_conf_5']#,'q_conf_6',
-    #'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
+    form_fields = ['q_conf_1','q_conf_2','q_conf_3','q_conf_4','q_conf_5','q_conf_6',
+    'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
+
 
 
 # class Relative(Page):
@@ -85,6 +87,7 @@ class Halfway(Page):
 
     def before_next_page(self):
         self.player.identify_rel_overconfident()
+        self.player.pay_elicitation()
         
 
 

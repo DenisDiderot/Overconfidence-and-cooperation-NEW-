@@ -311,6 +311,12 @@ SESSION_CONFIGS = [
         'num_demo_participants': 2,
         'app_sequence': ['trust_simple'],
     },
+     {
+        'name': 'public_goods',
+        'display_name': "Public Goods",
+        'num_demo_participants': 4,
+        'app_sequence': ['public_goods', 'payment_info'],
+    },
 
 ]
 

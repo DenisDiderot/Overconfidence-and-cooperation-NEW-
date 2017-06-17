@@ -4,6 +4,7 @@ from otree.api import (
 )
 import csv
 import operator
+import os
 
 author = 'Your name here'
 
@@ -26,6 +27,14 @@ class Constants(BaseConstants):
     num_rounds = len(questions)
     gto_seconds = 200
     overallrounds = True
+
+    # number = [x for x in range(1,29)]
+
+    # for i in range(29):
+    #     for filename in os.listdir("C:/Users/utente/Documents/Uni_Bonn/Thesis_Project/oTree/quiz/static/quiz/form_A"):
+    #         if filename.startswith("FA_E"):
+    #             os.rename(filename, "{}.jpg".format(number[i]))
+
 
 class Subsession(BaseSubsession):
     sorted_d = models.CharField()

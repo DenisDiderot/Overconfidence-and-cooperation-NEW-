@@ -52,7 +52,7 @@ class Group(BaseGroup):
 
     def set_payoffs(self):
         self.total_contribution = sum([p.contribution for p in self.get_players()])
-        self.individual_share = self.total_contribution * Constants.individual_return       ##### QUI BISOGNA AGGIUSTARE CON LA NUOVA DEFINIZIONE DI MPCR ######
+        self.individual_share = self.total_contribution * self.mpcr       ##### QUI BISOGNA AGGIUSTARE CON LA NUOVA DEFINIZIONE DI MPCR ######
         for p in self.get_players():
             p.payoff = (Constants.endowment - p.contribution) + self.individual_share
 
@@ -68,15 +68,18 @@ class Player(BasePlayer):
     relative = models.FloatField(
         min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
+    payoff_elicitation = models.CurrencyField()
+    result_other = models.FloatField()
+    rnd = models.PositiveIntegerField()
 
 
     def count_overconfidence(self):                                                         #da spostare
-        d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5]#, 
-        #self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
+        d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5, 
+        self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
         self.estimate = 0
-        for i in range(0,5):
+        for i in range(0,10):
             if d[i] == 'A':
-                self.estimate += 0.20
+                self.estimate += 0.10
         #estimate_float = float(estimate)
 
 
@@ -87,6 +90,10 @@ class Player(BasePlayer):
     #         self.guy = "On spot"
     #     else:
     #         self.guy = "Underconfident"
+    
+    def percentile_other_guy(self):
+        self.result_other = self.get_others_in_group()[0].percentile
+
 
     def identify_rel_overconfident(self):                                                    #da spostare
         if self.estimate > self.percentile:
@@ -96,18 +103,40 @@ class Player(BasePlayer):
         elif self.estimate < self.percentile:
             self.guy_relative = "Underconfident"
         else:
-            self.guy_relative = "{}{}".format(type(self.estimate), type(self.percentile))
+            self.guy_relative = "Check manually"
     
     # def something(self):                
     #     for i in range(1,6):
     #         setattr(self, "q_conf_{0}".format(i), models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal()))
 
     def check_and_adjust(self):                                                                 # da spostare
-        for i in range(1,6):
+        for i in range(1,10):
             if getattr(self, "q_conf_{0}".format(i)) == 'B':
-                for j in range(i, 6):
+                for j in range(i, 10):
                     setattr(self, "q_conf_{0}".format(j), 'B')
-       
+    
+
+    def pay_elicitation(self):
+        self.rnd = random.randint(1,10)
+        if getattr(self, "q_conf_{0}".format(self.rnd)) == 'A':
+            pool = [i for i in range(1,11)]
+            chosen = random.choice(pool)
+            if chosen > self.rnd:
+                self.payoff_elicitation = 0
+            else:
+                self.payoff_elicitation = 10                        #PAYOFF TO BE DECIDED
+        elif getattr(self, "q_conf_{0}".format(self.rnd)) == 'B':
+            if self.result_other > self.percentile:
+                self.payoff_elicitation = 0
+            elif self.result_other < self.percentile:
+                self.payoff_elicitation = 10
+            else:
+                self.payoff_elicitation = random.choice([0,10])
+        # else:
+        #     self.payoff_elicitation = 20
+
+
+
 
 
 
