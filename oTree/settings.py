@@ -141,8 +141,9 @@ SESSION_CONFIGS = [
     {
         'name': 'try',
         'display_name': "Overconfidence",
-        'num_demo_participants': 4,
+        'num_demo_participants': 16,
         'app_sequence': ['quiz', 'public_goods'],
+        'question_timeout_seconds': 5
     },
     {
         'name': 'Table',

@@ -6,6 +6,7 @@ from .gto_timeout_page import GTOPage
 import time
 
 class Beginning(Page):
+    
     def is_displayed(self):
         return self.round_number == 1
 
@@ -13,9 +14,10 @@ class Beginning(Page):
 class Question(GTOPage):
     form_model = models.Player
     form_fields = ['submitted_answer']
-    timer_text = 'Time left to complete this section:'
     general_timeout = True
 
+    def get_timeout_seconds(self):
+        return self.session.config['question_timeout_seconds']
 
     def gto_vars_for_template(self):
         roundd = self.round_number
@@ -40,6 +42,10 @@ class Question(GTOPage):
     def before_next_page(self):
         self.player.check_correct()
         self.player.count_correct()
+        self.subsession.check_none()
+        self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
+        if self.timeout_happened:
+            self.player.count = 0
         
 
 class BeginWaitPage(WaitPage):
@@ -49,7 +55,7 @@ class BeginWaitPage(WaitPage):
     wait_for_all_groups = True
     template_name = 'quiz/BeginWaitPage.html'
 
-class AfterWait(Page):
+class BeforeWait(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
@@ -57,6 +63,14 @@ class AfterWait(Page):
         self.subsession.check_none()
         self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
 
+class AfterWait(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    def before_next_page(self):
+        self.subsession.get_ranking()               
+        self.subsession.assign_percentile()         
+        self.subsession.player_perc()              
 
 class Results(Page):
     def is_displayed(self):
@@ -70,16 +84,12 @@ class Results(Page):
             'questions_correct': summ
         }  
 
-    def before_next_page(self):
-        self.subsession.get_ranking()               #LASCIA IN QUIZ
-        self.subsession.assign_percentile()         #LASCIA IN QUIZ
-        self.subsession.player_perc()               #LASCIA IN QUIZ
-        
+    
 
 page_sequence = [
     Beginning,
     Question,
+    BeforeWait,
     BeginWaitPage,
     AfterWait,
-    Results,
 ]

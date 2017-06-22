@@ -9,11 +9,11 @@
 
 	{% if group.info == "Bel" %}
 
-		<p> In this round you will be informed on the beliefs your group mate has on his ability. He thinks to be in the {{ xy }} percentile. </p>
+		<p> In this round you will be informed on the beliefs your group mate has on his ability. He thinks to be in the {{ other_confidence }} percentile. </p>
 
 	{% elif group.info == "Act" %}
 
-		<p> In this round you will be informed on the actual ability of yuor group mate, namely he is in the {{ xy }} percentile. </p>
+		<p> In this round you will be informed on the actual ability of yuor group mate, namely he is in the {{ other_result }} percentile. </p>
 
 	{% elif group.info == "No" %}
 
@@ -21,7 +21,7 @@
 
 	{% elif group.info == "Ctrl" %}
 
-		<p> In this round, the MPCR will be {{ xy }}. </p>
+		<p> In this round, the MPCR will be {{ MPCR_CTRL }}. </p>
 
 	{% else %}
 
