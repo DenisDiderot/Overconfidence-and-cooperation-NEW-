@@ -61,26 +61,14 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    total_contribution = models.CurrencyField()
-    individual_share = models.CurrencyField()
-    alpha = models.FloatField()
-    info = models.CharField()
-    mpcr = models.FloatField()
-    
-    def define_alpha(self):
-        self.alpha = sum(p.percentile for p in self.get_players())
-        
-    def define_return(self):
-        if self.info == "Ctrl":
-            self.mpcr = self.subsession.individual_alpha                            ### Check it works
-        else:
-            self.mpcr = self.subsession.individual_alpha*(self.alpha)               ### Check it works
-
     def set_payoffs(self):
-        self.total_contribution = sum([p.contribution for p in self.get_players()])
-        self.individual_share = self.total_contribution * self.mpcr       
         for p in self.get_players():
-            p.payoff = (Constants.endowment - p.contribution) + self.individual_share
+            mate = p.meet_friend()
+            p.total_contribution = p.contribution + mate.contribution
+            p.individual_share = p.total_contribution * p.mpcr
+            p.payoff = (Constants.endowment - p.contribution) + p.individual_share
+                   
+    
 
 
 class Player(BasePlayer):
@@ -97,11 +85,16 @@ class Player(BasePlayer):
     payoff_elicitation = models.CurrencyField()
     result_other = models.FloatField()
     rnd = models.PositiveIntegerField()
-    info_player = models.CharField()
+    # info_player = models.CharField()
     treat = models.CharField()
-    mate = models.CharField()
+    # mate = models.CharField()
+    alpha = models.FloatField()
+    mpcr = models.FloatField()
+    total_contribution = models.CurrencyField()
+    individual_share = models.CurrencyField()
+    info = models.CharField()
 
-    def count_overconfidence(self):                                                         #da spostare
+    def count_overconfidence(self):                                                         
         d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5, 
         self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
         self.estimate = 0
@@ -113,33 +106,59 @@ class Player(BasePlayer):
         """Here define the group mate"""
         if self.round_number in [1,4,7,10]:    
             if self.id_in_group in [1,2]:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
+                mate = self.get_others_in_group()[0]
+                print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
             elif self.id_in_group in [3,4]:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
+                mate = self.get_others_in_group()[2]
+                print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
         if self.round_number in [2,5,8,11]:
             if self.id_in_group == 1:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
+                mate = self.get_others_in_group()[1]
+                print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
             elif self.id_in_group == 2:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
+                mate = self.get_others_in_group()[2]
+                print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
             elif self.id_in_group == 3:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
+                mate = self.get_others_in_group()[0]
+                print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
             elif self.id_in_group == 4:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
+                mate = self.get_others_in_group()[1]
+                print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
         if self.round_number in [3,6,9,12]:
             if self.id_in_group == 1:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
+                mate = self.get_others_in_group()[2]
+                print(self.id_in_group, self.get_others_in_group()[2].id_in_group)
             elif self.id_in_group == 2:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
+                mate = self.get_others_in_group()[1]
+                print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
             elif self.id_in_group == 3:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
+                mate = self.get_others_in_group()[1]
+                print(self.id_in_group, self.get_others_in_group()[1].id_in_group)
             elif self.id_in_group == 4:
-                self.mate = print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
+                mate = self.get_others_in_group()[0]
+                print(self.id_in_group, self.get_others_in_group()[0].id_in_group)
+        return mate
 
 
     def percentile_other_guy(self):
-        self.result_other = print(self.id_in_group, self.get_others_in_group()[0].percentile)
+        mate = self.meet_friend()
+        print(mate.id_in_group, mate.percentile)
+        self.result_other = mate.percentile
+        print(mate.id_in_group, mate.estimate)
 
-    def identify_rel_overconfident(self):                                                    #da spostare
+    def define_alpha(self):
+        self.subsession.retrieve_percentile()
+        self.percentile_other_guy()
+        mate = self.meet_friend()
+        self.alpha = self.percentile + mate.percentile
+
+    def define_return(self):
+        if self.treat == "Ctrl":
+            self.mpcr = self.subsession.individual_alpha                           
+        else:
+            self.mpcr = self.subsession.individual_alpha*(self.alpha)
+
+    def identify_rel_overconfident(self):                                                    
         if self.estimate > self.percentile:
             self.guy_relative = "Overconfident"
         elif self.estimate == self.percentile:
@@ -149,7 +168,7 @@ class Player(BasePlayer):
         else:
             self.guy_relative = "Check manually"
     
-    def check_and_adjust(self):                                                                 # da spostare
+    def check_and_adjust(self):                                                                 
         for i in range(1,11):
             if getattr(self, "q_conf_{0}".format(i)) == 'B':
                 for j in range(i, 11):
@@ -163,7 +182,7 @@ class Player(BasePlayer):
             if chosen > self.rnd:
                 self.payoff_elicitation = 0
             else:
-                self.payoff_elicitation = 10                        #PAYOFF TO BE DECIDED
+                self.payoff_elicitation = 10                                                            ##### PAYOFF TO BE DECIDED #######
         elif getattr(self, "q_conf_{0}".format(self.rnd)) == 'B':
             if self.result_other > self.percentile:
                 self.payoff_elicitation = 0
@@ -171,6 +190,11 @@ class Player(BasePlayer):
                 self.payoff_elicitation = 10
             else:
                 self.payoff_elicitation = random.choice([0,10])
+
+        # mate = self.meet_friend()
+        # self.total_contribution = self.contribution + mate.contribution
+        # self.individual_share = self.total_contribution * self.mpcr       
+        # self.payoff = (Constants.endowment - self.contribution) + self.individual_share
 
 
 

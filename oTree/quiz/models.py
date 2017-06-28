@@ -25,7 +25,7 @@ class Constants(BaseConstants):
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
-    gto_seconds = 100
+    gto_seconds = 10
     overallrounds = True
 
     # number = [x for x in range(1,29)]
@@ -109,6 +109,3 @@ class Player(BasePlayer):
         if self.is_correct:
             self.count = 1
 
-        
-    # for i in range(0,10):
-    #     d[i] = models.CharField(initial=None, choices = Constants.options, widget=widgets.RadioSelectHorizontal())

@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
 if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
-    DEBUG = True
+    DEBUG = False
 else:
-    DEBUG = True
+    DEBUG = False
 
 
 # don't share this with anybody.
@@ -62,7 +62,7 @@ USE_POINTS = False
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = 'en'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']

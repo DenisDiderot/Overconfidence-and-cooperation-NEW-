@@ -22,15 +22,25 @@ class Elicitation(Page):
     form_model = models.Player
     form_fields = ['q_conf_1','q_conf_2','q_conf_3','q_conf_4','q_conf_5','q_conf_6',
     'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
-      
 
-class Halfway(Page):
-    def is_displayed(self):
-        return self.round_number == 1
+class HalfWaitPage(WaitPage):
+    #wait_for_all_groups = True
 
-    def before_next_page(self):
-        self.player.count_overconfidence()
-        self.player.pay_elicitation()
+    # def is_displayed(self):
+    #     return self.round_number == 1
+
+    def after_all_players_arrive(self):
+        for p in self.group.get_players():
+            p.count_overconfidence()
+            p.pay_elicitation()
+          
+
+# class Halfway(Page):
+    # def is_displayed(self):
+    #     return self.round_number == 1
+
+    # def before_next_page(self):
+        
         
 
 class Introduction(Page):
@@ -46,8 +56,8 @@ class BeforeInfo(Page):
     """Here the player will be reminded of the randomization"""
 
     def before_next_page(self):
-        #self.group.define_alpha()                          ###################### PUT BACK LATER #####################
-        #self.group.define_return()                         ###################### PUT BACK LATER #####################
+        self.player.define_alpha()                          
+        self.player.define_return()                         
         self.player.meet_friend()
         #self.player.percentile_other_guy()
         self.player.count_overconfidence()
@@ -57,16 +67,17 @@ class BeforeInfo(Page):
 class Information(Page):
     """Here the player will be informed on the information condition he's into. Obtain the mpcr."""
 
-    #def before_next_page(self):
-        #self.group.define_return()
-        #self.player.count_treat()
-
+    def before_next_page(self):
+        self.player.define_return()
+        
     def vars_for_template(self):
+        mate = self.player.meet_friend()
+
         return{
-            'info_condition': self.group.info,
-            'other_confidence': self.player.get_others_in_group()[0].estimate,
-            'other_result' : self.player.result_other,
-            'MPCR_CTRL' : self.group.mpcr,
+            'info_condition': self.player.treat,                                            
+            'other_confidence': mate.estimate*100,                                              ######### NEEDS TO BE CHECKED ONCE I TRY THE WHOLE THING THROUGH #######
+            'other_result' : self.player.result_other*100,
+            'MPCR_CTRL' : self.player.mpcr,                                                 
         }
 
 class Contribute(Page):
@@ -79,12 +90,12 @@ class Contribute(Page):
 
     def vars_for_template(self):
         return{
-            'mpcr': self.group.mpcr,
+            'mpcr': self.player.mpcr,                                                         ######### FIX AND PUT BACK ##########
         }
 
 class ResultsWaitPage(WaitPage):
-    # def after_all_players_arrive(self):
-    #     self.group.set_payoffs()
+    def after_all_players_arrive(self):
+        self.group.set_payoffs()
 
 
     body_text = "Waiting for other participants to contribute."
@@ -94,16 +105,19 @@ class Results(Page):
     """Players payoff: How much each has earned"""
 
 
-    # def vars_for_template(self):
-    #     return {
-    #         'total_earnings': self.group.total_contribution * (self.group.mpcr * Constants.players_per_group),
-    #     }
+    def vars_for_template(self):
+        mate = self.player.meet_friend()
+        return {
+            'mate_contribution' : mate.contribution,
+            'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),          ########## THINK BOUT THAT ###########
+        }
 
 
 page_sequence = [
     BeforeElicit,
     Elicitation,
-    Halfway,
+    HalfWaitPage,
+    # Halfway,
     Introduction,
     BeforeInfo,
     Information,
