@@ -139,11 +139,18 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
     {
-        'name': 'try',
+        'name': 'my_game_blue',
         'display_name': "Overconfidence",
         'num_demo_participants': 16,
         'app_sequence': ['quiz', 'public_goods'],
-        'question_timeout_seconds': 5
+        'treatment': 'blue',
+    },
+    {
+        'name': 'my_game_red',
+        'display_name': "Overconfidence",
+        'num_demo_participants': 16,
+        'app_sequence': ['quiz', 'public_goods'],
+        'treatment': 'red',
     },
     {
         'name': 'Table',
