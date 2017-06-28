@@ -28,7 +28,7 @@ class Subsession(BaseSubsession):
     final = models.CharField()
     treatments = models.CharField()
     matrix = models.CharField()
-    individual_alpha = models.FloatField()
+    standard_alpha = models.FloatField()
 
     def before_session_starts(self):
         
@@ -40,9 +40,9 @@ class Subsession(BaseSubsession):
 
         for p in self.get_players():
             if p.color == 'red':
-                self.individual_alpha = 0.5                                                      
+                self.standard_alpha = 0.5                                                      
             elif p.color == 'blue':
-                self.individual_alpha = 0.8
+                self.standard_alpha = 0.8
     
         if not self.session.vars.get('treatment_matrix'):
             self.session.vars['treatment_matrix'] = get_treatment_matrix()
@@ -68,9 +68,6 @@ class Group(BaseGroup):
             p.individual_share = p.total_contribution * p.mpcr
             p.payoff = (Constants.endowment - p.contribution) + p.individual_share
                    
-    
-
-
 class Player(BasePlayer):
     percentile = models.FloatField()
     estimate = models.FloatField()
@@ -78,7 +75,7 @@ class Player(BasePlayer):
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
     )
-    guy = models.CharField()
+    # guy = models.CharField()
     relative = models.FloatField(
         min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
@@ -93,6 +90,12 @@ class Player(BasePlayer):
     total_contribution = models.CurrencyField()
     individual_share = models.CurrencyField()
     info = models.CharField()
+    expected_ability = models.FloatField(
+        min=0, max=1, doc="""Expected ranking of mate""")
+    expected_contribution = models.CurrencyField(
+        min=0, max=Constants.endowment,
+        doc="""Expected contribution by mate""")
+
 
     def count_overconfidence(self):                                                         
         d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5, 
@@ -154,9 +157,9 @@ class Player(BasePlayer):
 
     def define_return(self):
         if self.treat == "Ctrl":
-            self.mpcr = self.subsession.individual_alpha                           
+            self.mpcr = self.subsession.standard_alpha                           
         else:
-            self.mpcr = self.subsession.individual_alpha*(self.alpha)
+            self.mpcr = self.subsession.standard_alpha*(self.alpha)
 
     def identify_rel_overconfident(self):                                                    
         if self.estimate > self.percentile:
@@ -175,6 +178,7 @@ class Player(BasePlayer):
                     setattr(self, "q_conf_{0}".format(j), 'B')
         
     def pay_elicitation(self):
+        """This method intends to pay individuals for their elicitation of preference. At the moment 10 credits are assigned to the individual. Payoffs need to be decided"""
         self.rnd = random.randint(1,10)
         if getattr(self, "q_conf_{0}".format(self.rnd)) == 'A':
             pool = [i for i in range(1,11)]
@@ -182,7 +186,7 @@ class Player(BasePlayer):
             if chosen > self.rnd:
                 self.payoff_elicitation = 0
             else:
-                self.payoff_elicitation = 10                                                            ##### PAYOFF TO BE DECIDED #######
+                self.payoff_elicitation = 10                                                            
         elif getattr(self, "q_conf_{0}".format(self.rnd)) == 'B':
             if self.result_other > self.percentile:
                 self.payoff_elicitation = 0
@@ -190,11 +194,6 @@ class Player(BasePlayer):
                 self.payoff_elicitation = 10
             else:
                 self.payoff_elicitation = random.choice([0,10])
-
-        # mate = self.meet_friend()
-        # self.total_contribution = self.contribution + mate.contribution
-        # self.individual_share = self.total_contribution * self.mpcr       
-        # self.payoff = (Constants.endowment - self.contribution) + self.individual_share
 
 
 

@@ -25,7 +25,7 @@ class Elicitation(Page):
 
 class HalfWaitPage(WaitPage):
     #wait_for_all_groups = True
-
+    body_text = "Waiting for other participants to fill in their table. Afterwards you are going to move on into Task 2. Instructions follow."
     # def is_displayed(self):
     #     return self.round_number == 1
 
@@ -100,6 +100,9 @@ class ResultsWaitPage(WaitPage):
 
     body_text = "Waiting for other participants to contribute."
 
+class Expectations(Page):
+    form_model = models.Player
+    form_fields = ['expected_ability', 'expected_contribution']
 
 class Results(Page):
     """Players payoff: How much each has earned"""
@@ -112,6 +115,9 @@ class Results(Page):
             'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),          ########## THINK BOUT THAT ###########
         }
 
+class End(Page):
+    def is_displayed(self):
+        return self.round_number == 7#Constants.num_rounds
 
 page_sequence = [
     BeforeElicit,
@@ -123,5 +129,7 @@ page_sequence = [
     Information,
     Contribute,
     ResultsWaitPage,
-    Results
+    Expectations,
+    Results,
+    End
 ]

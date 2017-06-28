@@ -1,79 +1,62 @@
 {% extends "global/Base.html" %}
 {% load staticfiles otree_tags %}
 
-{% block title %}
-    Elicitation of confidence level
-{% endblock %}
-
-{% block styles %}
-<!--    <style type="text/css">
-        .tg  {border-collapse:collapse;border-spacing:0;border:none;}
-        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
-        .tg .tg-yw4l{vertical-align:top}
-    </style> -->
-{% endblock %}
-
 {% block content %}
 
     <p>
-        Now you are going to be asked to choose between the following pair of alternatives. Choose which one you prefer from each pair, an algorithm will randomly pick one pair and your payment of this stage will depend upon what you have chosen. On the left hand side you can see a lottery that gives always 10 credits with changing probability, on the right hand side one of the 5 questions of before is chosen and you will receive the money if this is correct.
+        Now you are going to be asked to choose between the following pair of alternatives. Choose which one you prefer from each pair, an algorithm will randomly pick one pair and your payment of this stage will depend upon what you have chosen. On the left hand side you can see a lottery that gives the chance to win 10 credits with increasing probability; if chosen, the software will randomly pick a number and pay you with the given probability. On the right hand side you can decide to compare your result with that of a randomly chosen participant. If you performed better you receive 10 credit points, otherwise he receives the credit points, which are going to be converted into Euros at the end of the experiment.
     </p>
     
     <table class="tg">
-       <!--  <tr>
-            <th colspan="3"> Choose between the following alternatives, one per each pair. A lottery with probability p of winning and an
-            ability-related payment </th>
-        </tr> -->                               <!-- TO BE CHANGED: CHECK PAPER. I guess the ides is: check if you rank better then 10, ot. nothing +lOTT -->
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 10%</td>
             <td id="1">{% formfield player.q_conf_1 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 20%</td>
             <td id="2">{% formfield player.q_conf_2 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 30%</td>
             <td id="3">{% formfield player.q_conf_3 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 40%</td>
             <td id="4">{% formfield player.q_conf_4 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 50%</td>
             <td id="5">{% formfield player.q_conf_5 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 60%</td>
             <td id="6">{% formfield player.q_conf_6 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 70%</td>
             <td id="7">{% formfield player.q_conf_7 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 80%</td>
             <td id="8">{% formfield player.q_conf_8 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 90%</td>
             <td id="9">{% formfield player.q_conf_9 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         <tr>
             <td class="tg-031e">Lottery that gives 10 with probability 100%</td>
             <td id="10">{% formfield player.q_conf_10 with label="" %}</td>
-            <td class="tg-031e">Get 10 if you are better than your mate, otherwise 0</td>
+            <td class="tg-031e">Get 10 if you are better than a randomly selected participant, otherwise 0</td>
         </tr>
         
     </table>   
