@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
 if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
-    DEBUG = False
+    DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 
 # don't share this with anybody.
@@ -57,7 +57,8 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
-USE_POINTS = False
+POINTS_CUSTOM_NAME = 'tokens'
+USE_POINTS = True
 
 
 # e.g. en, de, fr, it, ja, zh-hans
@@ -132,7 +133,7 @@ mturk_hit_settings = {
 
 SESSION_CONFIG_DEFAULTS = {
     'real_world_currency_per_point': 1.00,
-    'participation_fee': 6.00,
+    'participation_fee': 4.00,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
 }
@@ -144,6 +145,7 @@ SESSION_CONFIGS = [
         'num_demo_participants': 16,
         'app_sequence': ['quiz', 'public_goods'],
         'treatment': 'blue',
+        'real_world_currency_per_point' : 0.1
     },
     {
         'name': 'my_game_red',

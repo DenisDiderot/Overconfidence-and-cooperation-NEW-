@@ -1,0 +1,29 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Rundenergebnis
+<p style="padding-left: 800px; font: 15px arial"> Runde {{ round }} von 20 </p>
+{% endblock %}
+
+{% block content %}
+    <p> 
+    	{% if  one == 1 %}
+    		
+    			In dieser Übungsrunde hätte ihre Auszahlung betragen: {{ earn|floatformat:-2 }} € .
+    	
+    	{% else %}
+
+    			In dieser Runde ist ihre Auszahlung: {{ earn|floatformat:-2 }} € .
+
+    	{% endif %}
+    </p> 
+
+
+    {% next_button %}
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}

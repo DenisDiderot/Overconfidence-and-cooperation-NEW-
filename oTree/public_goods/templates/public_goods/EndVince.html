@@ -1,0 +1,14 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block content %}
+	
+	<p> Ok, the experiment is over. I kindly ask you to remain seated and wait that the number of your cabin is called from the experimenters for the payment.</p>
+	<p> Don't worry if you do not know who he is, you will not receive any deduction in points...the quiz is also over!</p>
+	<video width="530" height="440" controls autoplay loop>
+			<source src='{% static "public_goods/Vince.mp4" %}' type="video/mp4"></source>
+	</video>
+    
+
+{% endblock %}

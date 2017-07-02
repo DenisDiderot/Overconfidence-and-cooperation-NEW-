@@ -1,0 +1,21 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Änderung der Aufdeckungskosten.
+<p style="padding-left: 800px; font: 15px arial"> Runde {{ round }} von 20 </p>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Jetzt folgen die nächsten 10 Runden. Die Runden sind identisch zu den ersten 10 Runden, allerdings ändern sich die Kosten für das Aufdecken der Boxen. In den nachfolgenden Runden wird das Aufdecken der Boxen je Box {{ cost_clicks }} € kosten
+    </p>
+
+    {% next_button %}
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}

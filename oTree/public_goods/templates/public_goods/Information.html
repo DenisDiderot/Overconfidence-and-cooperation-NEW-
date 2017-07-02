@@ -9,19 +9,19 @@
 
 	{% if player.treat == "Bel" %}
 
-		<p> In this round you will be informed on the beliefs your group mate has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}<sup>th</sup> percentile. </p>
+		<p> In this round you will be informed on the beliefs your group companion has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}<sup>th</sup> percentile. </p>
 
 	{% elif player.treat == "Act" %}
 
-		<p> In this round you will be informed on the actual ability of yuor group mate, namely he is in the {{ other_result }}<sup>th</sup> percentile. </p>
+		<p> In this round you will be informed on the actual ability of yuor group companion, namely he is in the {{ other_result|floatformat:2 }}<sup>th</sup> percentile. </p>
 
 	{% elif player.treat == "No" %}
 
-		<p> In this round no additional information will be given about your group mate's ability. </p>
+		<p> In this round you will be in the treatment where no information regarding your group companion is shared. The MPCR whough will still depend on both players' relative ability. </p>
 
 	{% elif player.treat == "Ctrl" %}
 
-		<p> In this round, the MPCR will be {{ MPCR_CTRL }}. </p>
+		<p> In this round the MPCR will not depend on the players' relative ability and will be {{ MPCR_CTRL }}. </p>
 
 	{% else %}
 

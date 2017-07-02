@@ -1,0 +1,312 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+{% load staticfiles %}
+
+{% block title %}
+<h1>{{ BOTTONE }}</h1>
+<p style="padding-left: 800px; font: 15px arial"> Runde {{ round }} von 20 </p>
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+	<!--<link href='{% static "css/stylesheet3.css" %}' rel="stylesheet" /> -->
+<style>
+button {
+   border-top: 1px solid #004d7d;
+   background: #388bc2;
+   background: -webkit-gradient(linear, left top, left bottom, from(#174b6e), to(#388bc2));
+   background: -webkit-linear-gradient(top, #174b6e, #388bc2);
+   background: -moz-linear-gradient(top, #174b6e, #388bc2);
+   background: -ms-linear-gradient(top, #174b6e, #388bc2);
+   background: -o-linear-gradient(top, #174b6e, #388bc2);
+   padding: 5px 10px;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 14px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   height: 40px;
+   width: 40px;
+}
+button:hover {
+   border-top-color: #28597a;
+   background: #28597a;
+   color: #ccc;
+}
+div.up{
+    position: relative;
+    left: 10px;
+    top: 10px;
+}
+table.left {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    border: 1px solid #CCC;
+}
+table.right {
+	position: absolute;
+	left: 180px;
+	top: 0px;
+	border: 1px solid #CCC;
+	color: #333;
+}
+p.probe{
+    position: absolute;
+    left: 300px;
+    top: 120px;
+    font-size: 40pt;
+    color: #333;
+}
+table.grid{
+	position: relative;
+	left: 100px;
+	top: 330px;
+    bottom: 20px;
+}
+td.text{
+	background: #F0F8FF;
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+</style>
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT AND SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+    {% block script %}
+    <div class="up">
+
+        <table border= "1" class="left">
+	        <tr>
+	            <td>
+	            <p> Ziel-Produkt </p>
+	                <img src='{% static "Table/Blank.jpg" %}' name = "canvas" border="2" />
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>
+	            <p> Ausgewähltes Produkt </p>
+	            <img src='{% static "Table/Blank.jpg" %}' name="canvas2" id="YourImage2" />
+	            </td>
+	        </tr>
+	        <tr>
+	            <td>
+	                <input type="hidden" name="tempo" id="id_tempo">
+	                <input type="hidden" name="clicchi" id="id_clicchi">
+	                <input type="hidden" name="clicchinuovi" id="id_clicchinuovi">
+	                <input type="hidden" name="distanza" id="id_distanza">
+	                <input type="hidden" name="arr_distanza" id="id_arr_distanza">
+                    <button name="money_kept" value="True" class="btn btn-primary btn-large btn-block nextbutton" id="id_nextbutton"> Kaufen </button>
+                    <button name="money_kept" value="False" class="btn btn-primary btn-large btn-block nextbutton" id="id_nextbutton_2"> Kauf abbrechen </button>
+	            </td>
+	        </tr>
+        </table>
+        <table border= "1" class="right">
+        	<tr>
+        		<td class="text" colspan="4"> Ihre gesetzte Anzahle an Filtern: {{ filters }}. Der Mindestwert der Produkte ist daher {{ filters }}. </td>
+        	</tr>
+        	<tr>
+                <td></td>
+                <td></td>
+            </tr>
+        	<tr>
+        		<td class="text"> Produktpreis </td>
+        		<td style="width:50px"> {{ price }} </td>
+        		<td class="text"> Aufdeckungskosten pro Box </td>
+        		<td style="width:50px"> {{ cost_clicks }} </td>
+        	</tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        	<tr>
+        		<td class="text"> Wert des gewählten Produktes </td>
+        		<td style="width:50px" hidden> <span id="distance"> </span> </td>
+				<td style="width:50px"> <span id="matching"> </span> </td>
+        		<td class="text"> Gesamte Aufdeckungskosten </td>
+        		<td style="width:50px"> <a id="costclicks"> 0 </a> </td>
+        	</tr>
+            <tr>
+                <td></td>
+            </tr>
+        	<tr>
+        		<td class="text"> Ihre Auszahlung in dieser Runde </td>
+        		<td style="width:50px"> <a id="payoff"> 0.00 </a> </td>
+        	</tr>
+        </table>
+        <p class="probe">
+            {% if  one == 1 %}
+
+                    PROBERUNDE!!!
+
+            {% endif %}
+        </p>
+	</div>
+
+    <div class="down">
+    <script src='{% static "jQuery/jquery-3.1.1.min.js" %}'></script> <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+    <script src='{% static "jQuery/jquery-2.0.2.min.js" %}'></script> <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script> -->
+    <script src='{% static "jQuery/jquery-1.10.2.js" %}'></script> <!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <script type="text/javascript">
+            var table = '';
+            var rows = 16;
+            var cols = 16;
+            var imagesArray = {{ data|safe }};
+            //var filtered_elements = {{ to_eliminate|safe }};
+            var ArrayDict = {{ dictionary|safe }};
+            var PriceClicks = {{ cost_clicks | safe }};
+         
+            var LengthArr = ArrayDict.length;
+            var time = 0;
+            var clicks = 0;
+            var clicksnew = -1;
+            var arr = new Array ();
+            var nums = []; //Creating an array with numbers (useful later)
+            for (var i = 0; i < (rows * cols); i++) {
+                nums.push(i);
+            };
+
+            //This is the time counter, basically a subtraction between the time on start and time at the submit time
+            window.onload = timer();
+            document.getElementById("id_nextbutton").onclick = function(){
+            	timer(); 
+            	document.getElementById("id_tempo").value = time; 
+            	document.getElementById("id_clicchi").value = clicks; 
+            	document.getElementById("id_clicchinuovi").value = clicksnew;
+            	document.getElementById("id_arr_distanza").value = arr;
+            }
+            document.getElementById("id_nextbutton_2").onclick = function(){
+                timer(); 
+                document.getElementById("id_tempo").value = time; 
+                document.getElementById("id_clicchi").value = clicks; 
+                document.getElementById("id_clicchinuovi").value = clicksnew;
+                document.getElementById("id_arr_distanza").value = arr;
+            }
+            function timer(){
+                time = Math.abs(time - Date.now());
+            }
+            function arrayme(){
+            	var bepushed = document.getElementById("distance").innerHTML;
+            	//var bestringed = bepushed.toString();
+            	arr.push(bepushed);
+            	console.log(arr);
+            	//document.getElementById("arraydist").innerHTML = arr;
+            }
+            // Adds one for every general click
+            //function onClick() {
+            //	clicks += 1;
+            //    document.getElementById("clicks").innerHTML = clicks;
+            //}
+
+            // Adds one for every NEW click
+            function onClicknew(num) {
+                var clickedEl = document.getElementById(num);
+                if (clickedEl.dataset.wasClicked) {
+                return;
+                }
+                clickedEl.dataset.wasClicked = true;
+                clicksnew += 1;
+                var costclicks_prov = clicksnew * PriceClicks;
+                var costclicks = costclicks_prov.toFixed(2);
+                document.getElementById("costclicks").innerHTML = costclicks;
+            }
+
+            //This shows the selected element
+            function SelShow(img){
+                document.canvas.src = '{% static "Table/'+ img + '.png" %}';
+            }
+            var sel = {{ selected|safe }};
+            window.onload = SelShow(sel);
+
+            //Creating stuff looking for distance
+            function distance(num){
+            	for (var j=0; j < LengthArr; j++) {
+            		var newA = ArrayDict[j];
+            		if(newA.indexOf(imagesArray[num]) > -1){
+            			$("#distance").html(j);
+            			$("#id_distanza").val(j);
+            		}
+            	}
+            }
+
+            //Creating payoff
+            function pay(){
+            	var filt = {{ price | safe }}
+            	var dist = document.getElementById("distance").innerHTML;
+            	var costclicks_pay = clicksnew * PriceClicks;
+            	var payoff = (8 - dist - filt - costclicks_pay).toFixed(2);
+            	document.getElementById("payoff").innerHTML = payoff;
+            	var matching = (8 - dist).toFixed(0)
+            	document.getElementById("matching").innerHTML = matching;
+            }
+
+            //This is the main function of the script, it takes a random binary from Images Array, gives it a path and end and display is
+            function displayImage(num){
+                document.canvas2.src = '{% static "Table/'+ imagesArray[num]+ '.png" %}';
+                document.getElementById("YourImage2").style.visibility = "visible";
+                onClicknew(num);
+                distance(num);
+                pay();
+                arrayme();
+            }
+
+
+            //function ApplyFilters(a, b){
+            //    for(var e = 0; e < a.length; e++){
+            //        for(var i = 0; i < b.length; i++) {
+            //        	if (imagesArray[e] === filtered_elements [i]) {
+            //        		document.getElementById(e).style.visibility = "hidden";
+            //        	}
+            //        }                    
+            //    }
+            //} //function that apply filters. Two for concatenated for loops, the first going through all the elements of a(imagesArray)
+
+            //This allows the buttons to go green after they are clicked
+            $(document).ready(function(){
+                $("button").not(document.querySelectorAll("#id_nextbutton, #id_nextbutton_2")).
+                click(function(){
+                	$(this).css ("background", "#eb1111");
+                	$(this).css ("border-top-color", "#eb1111");
+                	$(this).css ("background-image", "url('{% static "Table/circle-check.svg"%}')")
+                });
+            });
+
+            for(var r = 0; r < rows;r++)
+            {
+                table += '<tr>';
+                for(var c= 0; c< cols;c++)
+                {
+                    var random = Math.floor(Math.random() * nums.length);
+                    table += '<td style="width:40px">' + '<button id="' + nums[random] + '" type="button" onclick="displayImage(this.id)">' + '</button>' + '</td>';
+                    nums.splice(random, 1);
+                }
+                table += '</tr>';
+            } //creates the table and assigns the smileys
+            document.write('<table class="grid" border="1">' + table + '</table>'); //prints the table
+            //window.onload = ApplyFilters(imagesArray, filtered_elements);
+
+    </script>
+    </div>   
+    {% endblock %}
+{% endblock %}
+{% block scripts %}
+<script>
+window.onload = $(".well").hide();
+</script>
+{% endblock %}
+
+

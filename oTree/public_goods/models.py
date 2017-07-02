@@ -61,12 +61,18 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    def set_payoffs(self):
+    def pay_public(self):
         for p in self.get_players():
             mate = p.meet_friend()
             p.total_contribution = p.contribution + mate.contribution
             p.individual_share = p.total_contribution * p.mpcr
-            p.payoff = (Constants.endowment - p.contribution) + p.individual_share
+            p.payoff_public = (Constants.endowment - p.contribution) + p.individual_share
+
+    def set_payoffs(self):
+        for p in self.get_players():
+            p.rnd_round = random.randint(1,12)
+            p.payoff = p.in_round(p.rnd_round).payoff_public + p.payoff_elicitation
+
                    
 class Player(BasePlayer):
     percentile = models.FloatField()
@@ -80,8 +86,10 @@ class Player(BasePlayer):
         min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
     payoff_elicitation = models.CurrencyField()
+    payoff_public = models.CurrencyField()
     result_other = models.FloatField()
     rnd = models.PositiveIntegerField()
+    rnd_round = models.PositiveIntegerField()
     # info_player = models.CharField()
     treat = models.CharField()
     # mate = models.CharField()
@@ -104,6 +112,7 @@ class Player(BasePlayer):
         for i in range(0,10):
             if d[i] == 'A':
                 self.estimate += 0.10
+        return d
 
     def meet_friend(self):
         """Here define the group mate"""
@@ -178,22 +187,26 @@ class Player(BasePlayer):
                     setattr(self, "q_conf_{0}".format(j), 'B')
         
     def pay_elicitation(self):
-        """This method intends to pay individuals for their elicitation of preference. At the moment 10 credits are assigned to the individual. Payoffs need to be decided"""
+        """This method intends to pay individuals for their elicitation of preference. At the moment 100 credits are assigned to the individual. Payoffs need to be decided"""
         self.rnd = random.randint(1,10)
         if getattr(self, "q_conf_{0}".format(self.rnd)) == 'A':
             pool = [i for i in range(1,11)]
             chosen = random.choice(pool)
             if chosen > self.rnd:
-                self.payoff_elicitation = 0
+                self.payoff_elicitation = c(0)
             else:
-                self.payoff_elicitation = 10                                                            
+                self.payoff_elicitation = c(100)   
+            return getattr(self, "q_conf_{0}".format(self.rnd))                                                        
         elif getattr(self, "q_conf_{0}".format(self.rnd)) == 'B':
             if self.result_other > self.percentile:
-                self.payoff_elicitation = 0
+                self.payoff_elicitation = c(0)
             elif self.result_other < self.percentile:
-                self.payoff_elicitation = 10
+                self.payoff_elicitation = c(100)
             else:
-                self.payoff_elicitation = random.choice([0,10])
+                self.payoff_elicitation = random.choice([c(0),c(100)])
+            return getattr(self, "q_conf_{0}".format(self.rnd))
+
+
 
 
 

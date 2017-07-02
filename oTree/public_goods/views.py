@@ -95,7 +95,7 @@ class Contribute(Page):
 
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
-        self.group.set_payoffs()
+        self.group.pay_public()
 
 
     body_text = "Waiting for other participants to contribute."
@@ -112,12 +112,28 @@ class Results(Page):
         mate = self.player.meet_friend()
         return {
             'mate_contribution' : mate.contribution,
-            'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),          ########## THINK BOUT THAT ###########
+            'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),         
         }
 
-class End(Page):
+class EndResults(Page):
     def is_displayed(self):
-        return self.round_number == 7#Constants.num_rounds
+        return self.round_number == Constants.num_rounds
+
+    def vars_for_template(self):
+        self.group.set_payoffs()                                                                ###### NON OTTIMALE CHE VENGA CALCOLATO ORA...PENSACI PERCHE IN CASO DI REFRESH RICALCOLA ###
+        choice = self.player.pay_elicitation()
+        return {
+            'random_choice' : self.player.rnd,
+            'choice' : choice,
+            'random_public' : self.player.rnd_round,
+            'payoff_elicit' : self.player.payoff_elicitation,
+            'payoff_public' : self.player.in_round(self.player.rnd_round).payoff_public
+        }
+        
+
+class EndVince(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 page_sequence = [
     BeforeElicit,
@@ -131,5 +147,6 @@ page_sequence = [
     ResultsWaitPage,
     Expectations,
     Results,
-    End
+    EndResults,
+    EndVince
 ]
