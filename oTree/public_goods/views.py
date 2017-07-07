@@ -24,15 +24,13 @@ class Elicitation(Page):
     'q_conf_7','q_conf_8','q_conf_9','q_conf_10']
 
 class HalfWaitPage(WaitPage):
-    #wait_for_all_groups = True
+    wait_for_all_groups = True
     body_text = "Waiting for other participants to fill in their table. Afterwards you are going to move on into Task 2. Instructions follow."
     # def is_displayed(self):
     #     return self.round_number == 1
 
-    def after_all_players_arrive(self):
-        for p in self.group.get_players():
-            p.count_overconfidence()
-            p.pay_elicitation()
+    #def after_all_players_arrive(self):
+        
           
 
 class Introduction(Page):
@@ -41,18 +39,22 @@ class Introduction(Page):
         return self.round_number == 1
 
     def before_next_page(self):
-        self.player.identify_rel_overconfident()
+        for p in self.group.get_players():
+            p.count_overconfidence()
+            p.pay_elicitation()
+        
 
 
 class BeforeInfo(Page):
     """Here the player will be reminded of the randomization"""
 
     def before_next_page(self):
+        self.player.identify_rel_overconfident()
         self.player.define_alpha()                          
         self.player.define_return()                         
         self.player.meet_friend()
         #self.player.percentile_other_guy()
-        self.player.count_overconfidence()
+        #self.player.count_overconfidence()
 
 
 
@@ -128,7 +130,8 @@ class EndResults(Page):
             'choice' : self.player.choice,
             'random_public' : self.player.rnd_round,
             'payoff_elicit' : self.player.in_round(1).payoff_elicitation,
-            'payoff_public' : self.player.in_round(self.player.rnd_round).payoff_public
+            'payoff_public' : self.player.in_round(self.player.rnd_round).payoff_public,
+            'final' : self.participant.payoff_plus_participation_fee()
         }
         
 

@@ -15,7 +15,7 @@ This is a one-period public goods game with 3 players.
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 4
-    num_rounds = 12
+    num_rounds = 1
 
     instructions_template = 'public_goods/Instructions.html'
     options = [('A',''), ('B', '')] 
@@ -65,10 +65,11 @@ class Group(BaseGroup):
             p.individual_share = p.total_contribution * p.mpcr
             p.payoff_public = (Constants.endowment - p.contribution) + p.individual_share
 
+
     def set_payoffs(self):
         for p in self.get_players():
             p.rnd_round = random.randint(1,Constants.num_rounds)
-            p.payoff = p.in_round(p.rnd_round).payoff_public +p.in_round(1).payoff_elicitation
+            p.payoff = p.in_round(p.rnd_round).payoff_public + c(100)#p.in_round(1).payoff_elicitation
 
                    
 class Player(BasePlayer):
@@ -78,11 +79,12 @@ class Player(BasePlayer):
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
     )
-    relative = models.FloatField(
-        min=0, max=100, doc="""Estimate of own ranking""")
+    # relative = models.FloatField(
+    #     min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
     payoff_elicitation = models.CurrencyField()
     payoff_public = models.CurrencyField()
+    #payoff_points = models.CurrencyField()
     result_other = models.FloatField()
     rnd = models.PositiveIntegerField()
     rnd_round = models.PositiveIntegerField()
