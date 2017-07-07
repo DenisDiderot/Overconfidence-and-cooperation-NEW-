@@ -35,14 +35,6 @@ class HalfWaitPage(WaitPage):
             p.pay_elicitation()
           
 
-# class Halfway(Page):
-    # def is_displayed(self):
-    #     return self.round_number == 1
-
-    # def before_next_page(self):
-        
-        
-
 class Introduction(Page):
     """Description of the game. Obtain the alpha and the info condition."""
     def is_displayed(self):
@@ -104,6 +96,14 @@ class Expectations(Page):
     form_model = models.Player
     form_fields = ['expected_ability', 'expected_contribution']
 
+    def before_next_page(self):
+        if self.round_number == Constants.num_rounds:
+            self.group.set_payoffs()
+            self.player.pay_elicitation()  
+             
+        else:
+            pass
+
 class Results(Page):
     """Players payoff: How much each has earned"""
 
@@ -112,7 +112,8 @@ class Results(Page):
         mate = self.player.meet_friend()
         return {
             'mate_contribution' : mate.contribution,
-            'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),         
+            'total_earnings' : self.player.total_contribution * (self.player.mpcr * 2),
+            'remainder': c(100) - self.player.contribution
         }
 
 class EndResults(Page):
@@ -120,13 +121,13 @@ class EndResults(Page):
         return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
-        self.group.set_payoffs()                                                                ###### NON OTTIMALE CHE VENGA CALCOLATO ORA...PENSACI PERCHE IN CASO DI REFRESH RICALCOLA ###
-        choice = self.player.pay_elicitation()
+                                                                       ###### NON OTTIMALE CHE VENGA CALCOLATO ORA...
+                                                #####PENSACI PERCHE IN CASO DI REFRESH RICALCOLA ###
         return {
             'random_choice' : self.player.rnd,
-            'choice' : choice,
+            'choice' : self.player.choice,
             'random_public' : self.player.rnd_round,
-            'payoff_elicit' : self.player.payoff_elicitation,
+            'payoff_elicit' : self.player.in_round(1).payoff_elicitation,
             'payoff_public' : self.player.in_round(self.player.rnd_round).payoff_public
         }
         
@@ -146,7 +147,7 @@ page_sequence = [
     Contribute,
     ResultsWaitPage,
     Expectations,
-    Results,
+    #Results,
     EndResults,
     EndVince
 ]

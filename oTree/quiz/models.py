@@ -21,11 +21,11 @@ class Constants(BaseConstants):
     name_in_url = 'quiz'
     players_per_group = None
 
-    with open('quiz/quiz.csv') as f:
+    with open('quiz/quiz(A).csv') as f:
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
-    gto_seconds = 30
+    gto_seconds = 10
     overallrounds = True
 
 class Subsession(BaseSubsession):

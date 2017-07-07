@@ -5,25 +5,10 @@
 
 {% block content %}
 	
-	<p> For what concerns the first task, the choice set number {{ random_choice }} has been selected. Here your choice was the {% if choice == "A" %} lottery {% elif choice  == "B" %} comparison with the opponent {% endif %} and you gained {{ payoff_elicit }}. In the second task, the round which has been selected is {{ random_public}}, meaning that the payment for this task is {{ payoff_public}}. Therefore the overall payment is {{ player.payoff }} </p>
-<!-- 
-	<table class="table-condensed" style="width:500px; margin-top:20px;">
-        <tr><td> For the :</td><td>{{ player.contribution }}</td></tr>
-        <tr><td>Other participant contributed:</td><td>{{ mate_contribution }}</td></tr>
-        
-        <tr><td>Total contribution:</td><td>{{ player.total_contribution }}</td></tr>
+	<p> For what concerns the first task, the choice set number {{ random_choice }} has been selected. Here your choice was the {{ choice }} and you gained {{ payoff_elicit }}.</p>
+    <p> In the second task, the round which has been selected is {{ random_public}}, meaning that the payment for this task is {{ payoff_public}}.</p>
+    <p> Therefore the overall payment is {{ player.payoff }} </p>
 
-        <tr><td colspan="2"><hr/></td></tr>
-
-        <tr><td>Total earnings from the project:</td><td>{{ total_earnings }}</td></tr>
-        <tr><td>Your earnings from the project:</td><td>{{ player.individual_share }}</td></tr>
-
-        <tr><td colspan="2"><hr/></td></tr>
-
-        <tr><td>Thus in total you would earn:</td><td>{{ player.payoff }}</td></tr>
-
-    </table
- -->
     {% next_button %}
 
 {% endblock %}

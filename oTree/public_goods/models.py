@@ -25,9 +25,6 @@ class Constants(BaseConstants):
     treatments = ['Bel', 'Act', 'Ctrl', 'No',]
 
 class Subsession(BaseSubsession):
-    final = models.CharField()
-    treatments = models.CharField()
-    matrix = models.CharField()
     standard_alpha = models.FloatField()
 
     def before_session_starts(self):
@@ -70,8 +67,8 @@ class Group(BaseGroup):
 
     def set_payoffs(self):
         for p in self.get_players():
-            p.rnd_round = random.randint(1,12)
-            p.payoff = p.in_round(p.rnd_round).payoff_public + p.payoff_elicitation
+            p.rnd_round = random.randint(1,Constants.num_rounds)
+            p.payoff = p.in_round(p.rnd_round).payoff_public +p.in_round(1).payoff_elicitation
 
                    
 class Player(BasePlayer):
@@ -81,7 +78,6 @@ class Player(BasePlayer):
         min=0, max=Constants.endowment,
         doc="""The amount contributed by the player""",
     )
-    # guy = models.CharField()
     relative = models.FloatField(
         min=0, max=100, doc="""Estimate of own ranking""")
     guy_relative = models.CharField()
@@ -90,19 +86,17 @@ class Player(BasePlayer):
     result_other = models.FloatField()
     rnd = models.PositiveIntegerField()
     rnd_round = models.PositiveIntegerField()
-    # info_player = models.CharField()
     treat = models.CharField()
-    # mate = models.CharField()
     alpha = models.FloatField()
     mpcr = models.FloatField()
     total_contribution = models.CurrencyField()
     individual_share = models.CurrencyField()
-    info = models.CharField()
-    expected_ability = models.FloatField(
-        min=0, max=1, doc="""Expected ranking of mate""")
+    expected_ability = models.PositiveIntegerField(
+        min=0, max=100, doc="""Expected ranking of mate""")
     expected_contribution = models.CurrencyField(
         min=0, max=Constants.endowment,
         doc="""Expected contribution by mate""")
+    choice = models.CharField()
 
 
     def count_overconfidence(self):                                                         
@@ -110,7 +104,7 @@ class Player(BasePlayer):
         self.q_conf_6, self.q_conf_7, self.q_conf_8, self.q_conf_9, self.q_conf_10]
         self.estimate = 0
         for i in range(0,10):
-            if d[i] == 'A':
+            if d[i] == 'B':
                 self.estimate += 0.10
         return d
 
@@ -182,29 +176,29 @@ class Player(BasePlayer):
     
     def check_and_adjust(self):                                                                 
         for i in range(1,11):
-            if getattr(self, "q_conf_{0}".format(i)) == 'B':
+            if getattr(self, "q_conf_{0}".format(i)) == 'A':
                 for j in range(i, 11):
-                    setattr(self, "q_conf_{0}".format(j), 'B')
+                    setattr(self, "q_conf_{0}".format(j), 'A')
         
     def pay_elicitation(self):
         """This method intends to pay individuals for their elicitation of preference. At the moment 100 credits are assigned to the individual. Payoffs need to be decided"""
         self.rnd = random.randint(1,10)
         if getattr(self, "q_conf_{0}".format(self.rnd)) == 'A':
+            self.choice = "lottery"
             pool = [i for i in range(1,11)]
             chosen = random.choice(pool)
             if chosen > self.rnd:
                 self.payoff_elicitation = c(0)
             else:
-                self.payoff_elicitation = c(100)   
-            return getattr(self, "q_conf_{0}".format(self.rnd))                                                        
+                self.payoff_elicitation = c(100)                                                           
         elif getattr(self, "q_conf_{0}".format(self.rnd)) == 'B':
+            self.choice = "comparison with a randomly drawn participant"
             if self.result_other > self.percentile:
                 self.payoff_elicitation = c(0)
             elif self.result_other < self.percentile:
                 self.payoff_elicitation = c(100)
             else:
                 self.payoff_elicitation = random.choice([c(0),c(100)])
-            return getattr(self, "q_conf_{0}".format(self.rnd))
 
 
 
