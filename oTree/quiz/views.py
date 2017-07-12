@@ -5,12 +5,13 @@ from .models import Constants
 from .gto_timeout_page import GTOPage
 import time
 
+
 class Beginning(Page):
-    
+
     def is_displayed(self):
         return self.round_number == 1
 
-    
+
 class Question(GTOPage):
     form_model = models.Player
     form_fields = ['submitted_answer']
@@ -21,11 +22,11 @@ class Question(GTOPage):
 
     def gto_vars_for_template(self):
         roundd = self.round_number
-        
+
         return{
-            'round' : roundd,
-            'image_path1' : 'quiz/{}.jpg'.format(self.round_number),
-            'image_path2' : 'quiz/{}R.jpg'.format(self.round_number),
+            'round': roundd,
+            'image_path1': 'quiz/{}.jpg'.format(self.round_number),
+            'image_path2': 'quiz/{}R.jpg'.format(self.round_number),
         }
 
     def submitted_answer_choices(self):
@@ -43,35 +44,42 @@ class Question(GTOPage):
         self.player.check_correct()
         self.player.count_correct()
         self.subsession.check_none()
-        self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
+        self.player.cum_count = sum(
+            p.count for p in self.player.in_all_rounds())
         if self.timeout_happened:
             self.player.count = 0
-        
+
+
+class BeforeWait(Page):
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    def before_next_page(self):
+        self.subsession.check_none()
+        self.player.cum_count = sum(
+            p.count for p in self.player.in_all_rounds())
+
 
 class BeginWaitPage(WaitPage):
+
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
     wait_for_all_groups = True
     template_name = 'quiz/BeginWaitPage.html'
 
-class BeforeWait(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-
-    def before_next_page(self):
-        self.subsession.check_none()
-        self.player.cum_count = sum(p.count for p in self.player.in_all_rounds())
 
 class AfterWait(Page):
+
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
     def before_next_page(self):
-        self.subsession.get_ranking()               
-        self.subsession.assign_percentile()         
-        self.subsession.player_perc()              
-    
+        self.subsession.get_ranking()
+        self.subsession.assign_percentile()
+        self.subsession.player_perc()
+
 
 page_sequence = [
     Beginning,

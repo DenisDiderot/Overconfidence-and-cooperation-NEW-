@@ -6,26 +6,50 @@
 {% endblock %}
 
 {% block content %}
+	
+	{% if player.id_in_group == 2 %}
 
-	{% if player.treat == "Bel" %}
+		{% if info_condition == "Bel" %}
 
-		<p> In this round you will be informed on the beliefs your group companion has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}<sup>th</sup> percentile. </p>
+			<p> In this round you will be informed on the beliefs your group companion has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}<sup>th</sup> percentile. However he is in the {{ other_result|floatformat:2 }} <sup>th</sup> percentile. </p>
 
-	{% elif player.treat == "Act" %}
+		{% elif info_condition == "Act" %}
 
-		<p> In this round you will be informed on the actual ability of your group companion, namely he is in the {{ other_result|floatformat:2 }}<sup>th</sup> percentile. </p>
+			<p> In this round you will be informed on the actual ability of your group companion, namely he is in the {{ other_result|floatformat:2 }}<sup>th</sup> percentile. </p>
 
-	{% elif player.treat == "No" %}
+		{% elif info_condition == "Trial" %}
 
-		<p> In this round you will be in the treatment where no information regarding your group companion is shared. The MPCR whough will still depend on both players' relative ability. </p>
+			<p> In this round the MPCR will not depend on the players' relative ability and will be {{ MPCR_CTRL }}. Remember that this is a trial round and you are not going to be paid for this. </p>
 
-	{% elif player.treat == "Ctrl" %}
+		{% else %}
 
-		<p> In this round the MPCR will not depend on the players' relative ability and will be {{ MPCR_CTRL }}. </p>
+			<p> There has been an error!! (ID = 2) </p>
+
+		{% endif %}
+
+	{% elif player.id_in_group == 1 %}
+
+		{% if info_condition == "Bel" %}
+
+			<p> In this round alpha will depend upon your percentile in the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result and will also know your belief about that.</p>
+
+		{% elif info_condition == "Act" %}
+
+			<p> In this round alpha will depend upon your percentile in the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result. </p>
+
+		{% elif info_condition == "Trial" %}
+
+		 	<p> In this round the MPCR will not depend on the players' relative ability and will be {{ MPCR_CTRL }}. Remember that this is a trial round and you are not going to be paid for this. </p>
+
+		{% else %}
+
+			<p> There has been an error!! (ID = 1) </p>
+
+		{% endif %}
 
 	{% else %}
 
-		<p> There has been an error!! </p>
+		<p> There has been an error!! No ID </p>
 
 	{% endif %}
 
