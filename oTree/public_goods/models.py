@@ -42,7 +42,17 @@ class Subsession(BaseSubsession):
             elif p.color == 'blue':
                 self.standard_alpha = 0.8
 
-        self.group_randomly()
+        self.group_randomly(fixed_id_in_group = True)
+        if self.round_number == 6:
+            for group in self.get_groups():
+                players = group.get_players()
+                players.reverse()
+                group.set_players(players)
+        if self.round_number in [7,8,12,13,14]:
+            self.group_like_round(6)
+        if self.round_number in [2,3,4,5,9,10,11]:
+            self.group_like_round(1)
+
         print(self.get_group_matrix())
 
         if self.round_number < 3:

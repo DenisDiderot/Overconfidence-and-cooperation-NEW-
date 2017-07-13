@@ -14,6 +14,7 @@
                 <td class="tg-031e">Lottery that gives 100 with probability 10%</td>
                 <td id="1">{% formfield player.q_conf_1 with label="" %}</td>
                 <td class="tg-031e">Get 100 if you are better than a randomly selected participant, otherwise 0</td>
+                <!-- <button onclick="verify()"> Verify </button> -->
             </tr>
             <tr>
                 <td class="tg-031e">Lottery that gives 100 with probability 20%</td>
@@ -63,6 +64,24 @@
             
         </table>   
     </div>
+
+
+    <script type="text/javascript"> 
+
+        for(i = 1; i < 11; i++){
+            document.getElementById("id_q_conf_" + i + "_2").onclick = function() {
+                for(j = i; j < 11; j++){
+                    
+                    document.getElementById("id_q_conf_" + j + "_2").checked = true;
+                }
+            }
+        }       
+
+    </script>
+
+    
+
+
    <!--  <input type="submit" value="Next" onclick="confirm('Consider that if you switched once from the lottery to the ability related task and then you changed again to the lottery; those changes are going to be considered as errors and the second switching point will not be considered')"/> -->
 <!--     <button name="next" value="True" class="btn btn-primary btn-block nextbutton" id="id_nextbutton" onclick="confirm('Consider that if you switched once from the lottery to the ability related task and then you changed again to the lottery; those changes are going to be considered as errors and the second switching point will not be considered')"> Next </button> -->
 
