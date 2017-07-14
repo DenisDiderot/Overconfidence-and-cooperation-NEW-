@@ -50,8 +50,10 @@ class Subsession(BaseSubsession):
                 group.set_players(players)
         if self.round_number in [7,8,12,13,14]:
             self.group_like_round(6)
+            self.group_randomly(fixed_id_in_group = True)
         if self.round_number in [2,3,4,5,9,10,11]:
             self.group_like_round(1)
+            self.group_randomly(fixed_id_in_group = True)
 
         print(self.get_group_matrix())
 

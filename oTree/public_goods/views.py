@@ -117,6 +117,8 @@ class Expectations(Page):
 
 class Results(Page):
     """Players payoff: How much each has earned"""
+    def is_displayed(self):
+        return self.round_number in [1,2]
 
     def vars_for_template(self):
         mate = self.player.meet_friend()
@@ -160,7 +162,7 @@ page_sequence = [
     Contribute,
     ResultsWaitPage,
     Expectations,
-    # Results,
+    Results,
     EndResults,
     EndVince
 ]
