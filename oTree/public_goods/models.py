@@ -14,7 +14,7 @@ This is a one-period public goods game with 3 players.
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 2
-    num_rounds = 14
+    num_rounds = 12
 
     instructions_template = 'public_goods/Instructions.html'
     options = [('A', ''), ('B', '')]
@@ -43,31 +43,29 @@ class Subsession(BaseSubsession):
                 self.standard_alpha = 0.8
 
         self.group_randomly(fixed_id_in_group = True)
-        if self.round_number == 6:
+        if self.round_number == 4:
             for group in self.get_groups():
                 players = group.get_players()
                 players.reverse()
                 group.set_players(players)
-        if self.round_number in [7,8,12,13,14]:
-            self.group_like_round(6)
+        if self.round_number in [5,6,10,11,12]:
+            self.group_like_round(4)
             self.group_randomly(fixed_id_in_group = True)
-        if self.round_number in [2,3,4,5,9,10,11]:
+        if self.round_number in [2,3,7,8,9]:
             self.group_like_round(1)
             self.group_randomly(fixed_id_in_group = True)
 
         print(self.get_group_matrix())
 
-        if self.round_number < 3:
-            self.treatment_all = "Trial"
-            print(self.treatment_all)
-        if (self.round_number < 9 and self.round_number > 2):
+        # if self.round_number < 3:
+        #     self.treatment_all = "Trial"
+        #     print(self.treatment_all)
+        if self.round_number < 7:
             self.treatment_all = "Act"
             print(self.treatment_all)
-        if (self.round_number < 15 and self.round_number > 8):
+        if self.round_number > 6:
             self.treatment_all = "Bel"
             print(self.treatment_all)
-        else:
-            print("Error")
 
         for p in self.get_players():
             p.treat = self.treatment_all
@@ -90,7 +88,7 @@ class Group(BaseGroup):
 
     def set_payoffs(self):
         for p in self.get_players():
-            p.rnd_round = random.randint(3, Constants.num_rounds)
+            p.rnd_round = random.randint(1, Constants.num_rounds)
             p.payoff = p.in_round(p.rnd_round).payoff_public + \
                 p.in_round(1).payoff_elicitation
 
@@ -122,8 +120,6 @@ class Player(BasePlayer):
     mpcr = models.FloatField()
     total_contribution = models.CurrencyField()
     individual_share = models.CurrencyField()
-    expected_ability = models.PositiveIntegerField(
-        min=0, max=100, doc="""Expected ranking of mate""")
     expected_contribution = models.CurrencyField(
         min=0, max=Constants.endowment,
         doc="""Expected contribution by mate""")
@@ -147,10 +143,7 @@ class Player(BasePlayer):
 
     def define_return(self):
         self.group.define_alpha()
-        if self.treat == "Trial":
-            self.mpcr = self.subsession.standard_alpha
-        else:
-            self.mpcr = self.subsession.standard_alpha * (self.alpha)
+        self.mpcr = self.subsession.standard_alpha * (self.alpha)
 
     def identify_rel_overconfident(self):
         if self.estimate > self.percentile:
@@ -189,22 +182,22 @@ class Player(BasePlayer):
                 self.payoff_elicitation = random.choice([c(0), c(100)])
 
     q_conf_1 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_2 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_3 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_4 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_5 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_6 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_7 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_8 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_9 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
     q_conf_10 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))

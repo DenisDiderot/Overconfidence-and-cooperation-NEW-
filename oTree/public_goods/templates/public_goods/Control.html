@@ -1,7 +1,15 @@
 {% extends "global/Base.html" %}
 {% load staticfiles otree_tags %}
 
+{% block title %}
+	Some control questions before moving on
+{% endblock %}
 {% block content  %}
-	<p> Just click on the Next Button to move to the next page</p>
+	
+	<p> Some content </p>
+
+
+
     {% next_button %}
+
 {% endblock %}

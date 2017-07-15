@@ -5,32 +5,9 @@
     Contribute
 {% endblock %}
 
-{% block styles %}
-<style type="text/css">
-	p.trial{
-      	font-size: 20pt;
-    	color: #333;
-	}
-	
 
-</style>
-{% endblock%}
 
 {% block content %}
-	
-	<p class="trial">
-		{% if player.round_number == 1 %}
-
-			 TRIAL
-
-		{% endif %}
-
-		{% if player.round_number == 2 %}
-
-			ANOTHER TRIAL
-
-		{% endif %}
-	</p>
 
     {% formfield player.contribution with label="How much will you contribute to the project (from 0 to 100)?" %}
 

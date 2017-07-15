@@ -2,17 +2,13 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Some questions before moving on...
+    Please answer to this question before moving on.
 {% endblock %}
 
 {% block content %}
-	
-	{% formfield player.expected_ability with label="In which percentile do you think your round companion was (from 0 to 100)?" %}
 
 	{% formfield player.expected_contribution with label="How much do you think he contributed to the common project (from 0 to 100)?" %}
 
-
-    {% next_button %}
-
+	{% next_button %}
 
 {% endblock %}

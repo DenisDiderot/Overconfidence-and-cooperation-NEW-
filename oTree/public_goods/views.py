@@ -56,6 +56,12 @@ class Introduction(Page):
             p.pay_elicitation()
             p.define_return()
 
+class Control(Page):
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 
 class BeforeInfo(Page):
     """Here the player will be reminded of the randomization"""
@@ -64,6 +70,7 @@ class BeforeInfo(Page):
         if self.round_number == 1:
             self.player.identify_rel_overconfident()
 
+        self.player.percentile_other_guy()
         self.player.define_return()
 
 
@@ -72,12 +79,13 @@ class Information(Page):
 
     def vars_for_template(self):
         mate = self.player.meet_friend()
+        #self.player.percentile_other_guy()
 
         return{
             'info_condition': self.player.treat,
             'other_confidence': mate.in_round(1).estimate * 100,
             'other_result': self.player.result_other * 100,
-            'MPCR_CTRL': self.player.mpcr,
+            'mpcr': self.player.mpcr,
         }
 
 
@@ -90,6 +98,7 @@ class Contribute(Page):
     timeout_submission = {'contribution': c(Constants.endowment / 2)}
 
     def vars_for_template(self):
+        
         return{
             'mpcr': self.player.mpcr,
         }
@@ -105,7 +114,7 @@ class ResultsWaitPage(WaitPage):
 
 class Expectations(Page):
     form_model = models.Player
-    form_fields = ['expected_ability', 'expected_contribution']
+    form_fields = ['expected_contribution']
 
     def before_next_page(self):
         if self.round_number == Constants.num_rounds:
@@ -115,18 +124,18 @@ class Expectations(Page):
             pass
 
 
-class Results(Page):
-    """Players payoff: How much each has earned"""
-    def is_displayed(self):
-        return self.round_number in [1,2]
+# class Results(Page):
+#     """Players payoff: How much each has earned"""
+#     def is_displayed(self):
+#         return self.round_number in [1,2]
 
-    def vars_for_template(self):
-        mate = self.player.meet_friend()
-        return {
-            'mate_contribution': mate.contribution,
-            'total_earnings': self.player.total_contribution * (self.player.mpcr * 2),
-            'remainder': c(100) - self.player.contribution
-        }
+#     def vars_for_template(self):
+#         mate = self.player.meet_friend()
+#         return {
+#             'mate_contribution': mate.contribution,
+#             'total_earnings': self.player.total_contribution * (self.player.mpcr * 2),
+#             'remainder': c(100) - self.player.contribution
+#         }
 
 
 class EndResults(Page):
@@ -137,8 +146,8 @@ class EndResults(Page):
     def vars_for_template(self):
 
         return {
-            'random_choice': self.player.rnd,
-            'choice': self.player.choice,
+            'random_choice': self.player.in_round(1).rnd,
+            'choice': self.player.in_round(1).choice,
             'random_public': self.player.rnd_round,
             'payoff_elicit': self.player.in_round(1).payoff_elicitation,
             'payoff_public': self.player.in_round(self.player.rnd_round).payoff_public,
@@ -157,12 +166,13 @@ page_sequence = [
     HalfWaitPage,
     WithinWaitPage,
     Introduction,
+    Control,
     BeforeInfo,
     Information,
     Contribute,
     ResultsWaitPage,
     Expectations,
-    Results,
+    #Results,
     EndResults,
     EndVince
 ]

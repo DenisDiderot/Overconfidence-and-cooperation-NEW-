@@ -5,6 +5,10 @@ from .models import Constants
 from .gto_timeout_page import GTOPage
 import time
 
+class BeforeBeginning(Page):
+
+    def is_displayed(self):
+        return self.round_number == 1
 
 class Beginning(Page):
 
@@ -82,6 +86,7 @@ class AfterWait(Page):
 
 
 page_sequence = [
+    # BeforeBeginning,
     Beginning,
     Question,
     BeforeWait,
