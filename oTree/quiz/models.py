@@ -5,6 +5,7 @@ from otree.api import (
 import csv
 import operator
 import os
+import math
 
 author = 'Your name here'
 
@@ -59,8 +60,14 @@ class Subsession(BaseSubsession):
     def assign_percentile(self):
         self.percentile = []  # and question should not be big issue
         for i in range(0, self.participants):
-            perci = (i + 1) / self.participants
-            self.percentile.append(perci)
+            perci = ((i + 1) / self.participants)*10            ## BACK TO PERCENTILE; REMOVE * 10 and CHANGE THE APPEND ###
+            print(perci, type(perci))
+            if (perci < 1):
+                rounded = math.ceil(perci)
+            else:
+                rounded = round(perci)
+            print(rounded, type(rounded))
+            self.percentile.append(rounded/10)
 
     def player_perc(self):
         for p in self.get_players():
