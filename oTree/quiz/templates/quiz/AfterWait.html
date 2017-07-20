@@ -2,11 +2,8 @@
 {% load staticfiles otree_tags %}
 
 {% block content  %}
-	<p> Let us calculate your results before moving to the choice sets. Remember that this is the point where your results and the estimation of your ability will be crucial for the payoff you will receive from this first part of the experiment.</p>
+
+	<p> Please click on the "Next" button to go to the next page. We will calculate now your results from the quiz. </p>
+
     {% next_button %}
-{% endblock %}
-{% block scripts %}
-<script>
-window.onload = $(".well").hide();
-</script>
 {% endblock %}

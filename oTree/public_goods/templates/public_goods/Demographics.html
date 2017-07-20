@@ -1,0 +1,47 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Questionnaire
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		.tg  {border-collapse:collapse;border-spacing:0;border:none;}
+		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
+		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;}
+		.tg .tg-yw4l{vertical-align:top}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+       You reached the end of this experiment. Please answer the following questions
+    </p>
+
+    
+    {% formfield player.q_age %}
+    {% formfield player.q_gender %}    
+    {% formfield player.comments %}
+
+
+    <table class="tg">
+		<tr>
+		    <th class="tg-031e" style="width: 340px">Are you generally a risk-loving person or do you try to avoid risks?</th>
+		    <th class="tg-031e">I try to avoid risks</th>
+		    <th class="tg-031e">{% formfield player.q_risk1 with label="" %}</th>
+		    <th class="tg-031e">I am a risk-loving person</th>
+		</tr>
+		<tr>
+		    <th class="tg-031e">In unsure situations, I usually assume everything will be fine in the end.</th>
+		    <th class="tg-031e">I definitely do not agree</th>
+		    <th class="tg-031e">{% formfield player.q_risk2 with label="" %}</th>
+		    <th class="tg-031e">I agree completely</th>
+		</tr>
+	</table>
+
+
+    {% next_button %}
+
+{% endblock %}

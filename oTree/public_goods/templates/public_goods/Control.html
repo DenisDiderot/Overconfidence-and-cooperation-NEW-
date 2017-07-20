@@ -5,9 +5,59 @@
 	Some control questions before moving on
 {% endblock %}
 {% block content  %}
-	
-	<p> Some content </p>
 
+
+	
+	<p> How many rounds are going to be paid? </p>
+		<div class="form-group required">
+			<div class="controls  field-control1">
+	            <label class="radio-inline" for="id_control_1_1"><input type="radio" id="1" value="12" name="control1" onClick="err()" required> <b>12 rounds</b> </label>
+
+	            <label class="radio-inline" for="id_control_1_2"><input type="radio" id="1" value="only 1" name="control1" required> <b>Only one of the 12 rounds, randomly selected </b> </label>
+	        </div>
+	    </div>
+
+	<p> The return of the public good - also called alpha - will depend upon: </p>
+		<div class="form-group required">
+			<div class="controls  field-control2">
+	            <label class="radio" for="id_control_2_1"><input type="radio" id="2" value="either me or the other" name="control2" required> either mine or my opponent's ability </label>
+
+	            <label class="radio" for="id_control_2_2"><input type="radio" id="2" value="given number" name="control2" onClick="err()" required> it is a given number, communicated to me at the beginning of each round </label>
+	        </div>
+	    </div>	
+		
+	<p> Suppose that you receive the following information: "In this round alpha will depend upon your quantile in the results of the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result and will also know your belief about that." Who is determining the alpha in this round? </p>
+
+		<div class="form-group required">
+			<div class="controls  field-control3">
+	            <label class="radio" for="id_control_3_1"><input type="radio" id="3" value="me" name="control3" required> Me, with my ability from the previous Task </label>
+
+	            <label class="radio" for="id_control_3_2"><input type="radio" id="3" value="him" name="control3" onClick="err()" required> My group's companion, with his level of ability </label>
+	        </div>
+	    </div>	
+
+		
+	<p> On the other hand, suppose you receive this information: "In this round you will be informed on the actual ability of your group companion, namely he is in the 7<sup>th</sup> percentile. The alpha will therefore be 0.7.". Which player is determining the return? </p>
+
+		<div class="form-group required">
+			<div class="controls  field-control4">
+	            <label class="radio" for="id_control_4_1"><input type="radio" id="4" value="me" name="control4" onClick="err()" required> Me, with my ability from the previous Task </label>
+
+	            <label class="radio" for="id_control_4_2"><input type="radio" id="4" value="him" name="control4" required> My group's companion, with his level of ability </label>
+	        </div>
+	    </div>	
+	
+ 
+	<p> Again, relying on the previous information, which is going to be the multiplication factor of the public good (i.e. alpha)? </p>
+
+		{% formfield player.control5 with label="" %}
+
+	<script type="text/javascript">
+		function err(){
+			alert("Are you sure about your answer?");
+		}
+
+	</script>
 
 
     {% next_button %}

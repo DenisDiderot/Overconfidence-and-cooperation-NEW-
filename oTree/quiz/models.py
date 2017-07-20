@@ -67,7 +67,7 @@ class Subsession(BaseSubsession):
             else:
                 rounded = round(perci)
             print(rounded, type(rounded))
-            self.percentile.append(rounded/10)
+            self.percentile.append(rounded/10)                  ### HERE WRITE PERCI ###
 
     def player_perc(self):
         for p in self.get_players():

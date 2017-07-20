@@ -2,9 +2,11 @@
 {% load staticfiles otree_tags %}
 
 {% block content %}
-    <p>
-        Choose which alternative you prefere in each set, i.e. pair. An algorithm will randomly pick one pair and your payment of this stage will depend on your choice in that very one. On the left hand side you can see a lottery that gives the chance to win 100 tokens with increasing probability; if chosen, the software will randomly pick a number and pay you with the given probability. On the right hand side you can decide to compare your result with that of a randomly chosen participant. If you performed better you receive 100 credit points, otherwise he receives the tokens.
-    </p>
+    <div style="text-align:justify">    
+        <p>
+            Choose which alternative you prefer in each set, i.e. pair. An algorithm will randomly pick one pair and your payment of this stage will depend on your choice in that very one. On the left hand side you can see a lottery that gives the chance to win 100 tokens with increasing probability; if chosen, a lottery will decide your payoff in this task, with the given probabilities. On the right hand side you can decide to compare your result with that of a randomly chosen participant. If you performed better in the quiz you receive 100 tokens, otherwise you receive nothing. 
+        </p>
+    </div>
     <div id="attention" style="border: 2px solid red;" align="center"> 
         <p> Notice that we will assume that if you accept the lottery for a certain probability, you should accept it also for higher probability.</p> 
     </div>
@@ -195,10 +197,6 @@
 
     </script>
 
-
-
-   <!--  <input type="submit" value="Next" onclick="confirm('Consider that if you switched once from the lottery to the ability related task and then you changed again to the lottery; those changes are going to be considered as errors and the second switching point will not be considered')"/> -->
-<!--     <button name="next" value="True" class="btn btn-primary btn-block nextbutton" id="id_nextbutton" onclick="confirm('Consider that if you switched once from the lottery to the ability related task and then you changed again to the lottery; those changes are going to be considered as errors and the second switching point will not be considered')"> Next </button> -->
 
     {% next_button %}
 {% endblock %}

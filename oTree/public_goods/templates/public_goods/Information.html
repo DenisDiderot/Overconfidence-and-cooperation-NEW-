@@ -11,11 +11,11 @@
 
 		{% if info_condition == "Bel" %}
 
-			<p> In this round you will be informed on the beliefs your group companion has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}<sup>th</sup> percentile. However he is in the {{ other_result|floatformat:2 }} <sup>th</sup> percentile, therefore the alpha will be {{ mpcr|floatformat:2 }}. </p>
+			<p> In this round you will be informed on the beliefs your group companion has on his ability. He thinks to be in the {{ other_confidence|floatformat:0 }}{% if other_confidence == 1 %}<sup>st</sup>{% elif other_confidence == 2 %}<sup>nd</sup>{% elif other_confidence == 3 %}<sup>rd</sup>{% else %}<sup>th</sup>{% endif %} decile. {% if other_confidence == other_result %}As he correctly guessed {% else %} However {% endif %} he is in the {{ other_result|floatformat:0 }}{% if other_result == 1 %}<sup>st</sup>{% elif other_result == 2 %}<sup>nd</sup>{% elif other_result == 3 %}<sup>rd</sup>{% else %}<sup>th</sup>{% endif %} decile, therefore the alpha will be {{ mpcr|floatformat:1 }}. </p>
 
 		{% elif info_condition == "Act" %}
 
-			<p> In this round you will be informed on the actual ability of your group companion, namely he is in the {{ other_result|floatformat:2 }}<sup>th</sup> percentile. The alpha will therefore be {{ mpcr|floatformat:2 }}</p>
+			<p> In this round you will be informed on the actual ability of your group companion, namely he is in the {{ other_result|floatformat:0 }}{% if other_result == 1 %}<sup>st</sup>{% elif other_result == 2 %}<sup>nd</sup>{% elif other_result == 3 %}<sup>rd</sup>{% else %}<sup>th</sup>{% endif %} decile. The alpha will therefore be {{ mpcr|floatformat:1 }}</p>
 
 		{% else %}
 
@@ -27,11 +27,11 @@
 
 		{% if info_condition == "Bel" %}
 
-			<p> In this round alpha will depend upon your percentile in the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result and will also know your belief about that.</p>
+			<p> In this round alpha will depend upon your quantile in the results of the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result and will also know your belief about that.</p>
 
 		{% elif info_condition == "Act" %}
 
-			<p> In this round alpha will depend upon your percentile in the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result. </p>
+			<p> In this round alpha will depend upon your quantile in the results of the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result. </p>
 
 
 		{% else %}

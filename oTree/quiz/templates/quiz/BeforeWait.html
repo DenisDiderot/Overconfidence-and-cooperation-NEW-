@@ -2,11 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block content  %}
-	<p> Now click and wait for the other participants!</p>
+	<p> Now click and wait for the other participants.</p>
+
     {% next_button %}
-{% endblock %}
-{% block scripts %}
-<script>
-window.onload = $(".well").hide();
-</script>
 {% endblock %}

@@ -14,33 +14,36 @@ This is a one-period public goods game with 3 players.
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 2
-    num_rounds = 12
+    num_rounds = 1
 
     instructions_template = 'public_goods/Instructions.html'
     options = [('A', ''), ('B', '')]
     # """Amount allocated to each player"""
     endowment = c(100)
 
+    likertscale = [('1', ''), ('2', ''), ('3', ''), ('4', ''), ('5', ''), ('6', ''), ('7', '')]
+
     #treatments = ['Bel', 'Act', 'Ctrl', 'No',]
 
 
 class Subsession(BaseSubsession):
-    standard_alpha = models.FloatField()
+    #standard_alpha = models.FloatField()
     treatment_all = models.CharField()
 
     def before_session_starts(self):
 
-        for p in self.get_players():
-            if 'treatment' in self.session.config:
-                p.color = self.session.config['treatment']
-            else:
-                p.color = random.choice(['blue', 'red'])
 
-        for p in self.get_players():
-            if p.color == 'red':
-                self.standard_alpha = 0.5
-            elif p.color == 'blue':
-                self.standard_alpha = 0.8
+        # for p in self.get_players():
+        #     if 'treatment' in self.session.config:
+        #         p.color = self.session.config['treatment']
+        #     else:
+        #         p.color = random.choice(['blue', 'red'])
+
+        # for p in self.get_players():
+        #     if p.color == 'red':
+        #         self.standard_alpha = 0.5
+        #     elif p.color == 'blue':
+        #         self.standard_alpha = 0.8
 
         self.group_randomly(fixed_id_in_group = True)
         if self.round_number == 4:
@@ -82,7 +85,7 @@ class Group(BaseGroup):
             #mate = p.meet_friend()
             p.total_contribution = p.contribution + \
                 p.get_others_in_group()[0].contribution
-            p.individual_share = p.total_contribution * p.mpcr
+            p.individual_share = p.total_contribution * p.alpha
             p.payoff_public = (Constants.endowment -
                                p.contribution) + p.individual_share
 
@@ -117,13 +120,19 @@ class Player(BasePlayer):
     rnd_round = models.PositiveIntegerField()
     treat = models.CharField()
     alpha = models.FloatField()
-    mpcr = models.FloatField()
+    #mpcr = models.FloatField()
     total_contribution = models.CurrencyField()
     individual_share = models.CurrencyField()
     expected_contribution = models.CurrencyField(
         min=0, max=Constants.endowment,
         doc="""Expected contribution by mate""")
     choice = models.CharField()
+    control1 = models.CharField(widget=widgets.RadioSelect())
+    control2 = models.CharField(widget=widgets.RadioSelect())
+    control3 = models.CharField(widget=widgets.RadioSelect())
+    control4 = models.CharField(widget=widgets.RadioSelect())
+    control5 = models.FloatField(min=0.7, max=0.7)
+
 
     def count_overconfidence(self):
         d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5,
@@ -139,11 +148,12 @@ class Player(BasePlayer):
         return mate
 
     def percentile_other_guy(self):
+        self.subsession.retrieve_percentile()
         self.result_other = self.get_others_in_group()[0].percentile
 
-    def define_return(self):
-        self.group.define_alpha()
-        self.mpcr = self.subsession.standard_alpha * (self.alpha)
+    # def define_return(self):
+    #     self.group.define_alpha()
+    #     self.mpcr = self.subsession.standard_alpha * (self.alpha)
 
     def identify_rel_overconfident(self):
         if self.estimate > self.percentile:
@@ -182,22 +192,52 @@ class Player(BasePlayer):
                 self.payoff_elicitation = random.choice([c(0), c(100)])
 
     q_conf_1 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_2 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_3 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_4 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_5 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_6 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_7 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_8 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_9 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
     q_conf_10 = models.CharField(
-        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal(attrs={'onClick' : 'left_click(this.id)'}))
+        initial=None, choices=Constants.options, widget=widgets.RadioSelectHorizontal())
+
+
+    q_risk1 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                verbose_name='Are you generally a risk-loving person or do you try to avoid risks?',
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_risk2 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                verbose_name='In unsure situations, I usually assume everything will be fine in the end.',
+                                widget=widgets.RadioSelectHorizontal())
+
+
+    q_age = models.PositiveIntegerField(verbose_name='How old are you?',
+                                        choices=range(13, 125),
+                                        initial=None)
+
+    q_gender = models.CharField(initial=None,
+                                choices=['male', 'female'],
+                                verbose_name='You are a...',
+                                widget=widgets.RadioSelect())
+
+    comments = models.TextField(initial=None,
+                                verbose_name='Do you still have any comment regarding the experiment?',
+                                blank=True
+                                )
+
+
+
+

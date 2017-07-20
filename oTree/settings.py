@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
 if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
-    DEBUG = True   
+    DEBUG = False   
 else:
-    DEBUG = True
+    DEBUG = False
 
 
 # don't share this with anybody.
@@ -141,21 +141,21 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
     {
-        'name': 'my_game_blue',
-        'display_name': "Overconfidence (0.8)",
+        'name': 'OverandCoop',
+        'display_name': "Overconfidence (1.0)",
         'num_demo_participants': 16,
         'app_sequence': ['quiz', 'public_goods'],
-        'treatment': 'blue',
+        #'treatment': 'blue',
         'real_world_currency_per_point' : 0.05
     },
-    {
-        'name': 'my_game_red',
-        'display_name': "Overconfidence (0.5)",
-        'num_demo_participants': 16,
-        'app_sequence': ['quiz', 'public_goods'],
-        'treatment': 'red',
-        'real_world_currency_per_point' : 0.05
-    },
+    # {
+    #     'name': 'my_game_red',
+    #     'display_name': "Overconfidence (0.5)",
+    #     'num_demo_participants': 16,
+    #     'app_sequence': ['quiz', 'public_goods'],
+    #     'treatment': 'red',
+    #     'real_world_currency_per_point' : 0.05
+    # },
     # {
     #     'name': 'Table',
     #     'display_name': "Strategic Inattention",

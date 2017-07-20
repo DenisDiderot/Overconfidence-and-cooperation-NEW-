@@ -9,8 +9,8 @@ class BeforeElicit(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    def before_next_page(self):
-        self.subsession.retrieve_percentile()
+    # def before_next_page(self):
+    #     self.subsession.retrieve_percentile()
 
 
 class Elicitation(Page):
@@ -19,7 +19,7 @@ class Elicitation(Page):
         return self.round_number == 1
 
     def before_next_page(self):
-        self.player.check_and_adjust()
+        #self.player.check_and_adjust()
         self.player.percentile_other_guy()
         self.group.define_alpha()
 
@@ -51,15 +51,18 @@ class Introduction(Page):
         return self.round_number == 1
 
     def before_next_page(self):
+        self.group.define_alpha()
         for p in self.group.get_players():
             p.count_overconfidence()
             p.pay_elicitation()
-            p.define_return()
-
+            
 class Control(Page):
 
     def is_displayed(self):
         return self.round_number == 1
+
+    form_model = models.Player
+    form_fields = ['control1','control2','control3','control4','control5'] 
 
 
 
@@ -71,7 +74,7 @@ class BeforeInfo(Page):
             self.player.identify_rel_overconfident()
 
         self.player.percentile_other_guy()
-        self.player.define_return()
+        self.group.define_alpha()
 
 
 class Information(Page):
@@ -83,9 +86,9 @@ class Information(Page):
 
         return{
             'info_condition': self.player.treat,
-            'other_confidence': mate.in_round(1).estimate * 100,
-            'other_result': self.player.result_other * 100,
-            'mpcr': self.player.mpcr,
+            'other_confidence': mate.in_round(1).estimate * 10,
+            'other_result': self.player.result_other * 10,
+            'mpcr': self.player.alpha,
         }
 
 
@@ -100,7 +103,7 @@ class Contribute(Page):
     def vars_for_template(self):
         
         return{
-            'mpcr': self.player.mpcr,
+            'mpcr': self.player.alpha,
         }
 
 
@@ -154,6 +157,14 @@ class EndResults(Page):
             'final': self.participant.payoff_plus_participation_fee()
         }
 
+class Demographics(Page):
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    form_model = models.Player
+    form_fields = ['q_age', 'q_gender', 'q_risk1', 'q_risk2','comments']
+
 
 class EndVince(Page):
 
@@ -161,7 +172,7 @@ class EndVince(Page):
         return self.round_number == Constants.num_rounds
 
 page_sequence = [
-    BeforeElicit,
+    #BeforeElicit,
     Elicitation,
     HalfWaitPage,
     WithinWaitPage,
@@ -174,5 +185,6 @@ page_sequence = [
     Expectations,
     #Results,
     EndResults,
+    Demographics,
     EndVince
 ]
