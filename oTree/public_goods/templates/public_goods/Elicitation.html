@@ -2,13 +2,13 @@
 {% load staticfiles otree_tags %}
 
 {% block content %}
-    <div style="text-align:justify">    
+    <div style="text-align:justify; width: 800px">    
         <p>
-            Choose which alternative you prefer in each set, i.e. pair. An algorithm will randomly pick one pair and your payment of this stage will depend on your choice in that very one. On the left hand side you can see a lottery that gives the chance to win 100 tokens with increasing probability; if chosen, a lottery will decide your payoff in this task, with the given probabilities. On the right hand side you can decide to compare your result with that of a randomly chosen participant. If you performed better in the quiz you receive 100 tokens, otherwise you receive nothing. 
+            Choose which alternative you prefer in each row. An algorithm will randomly pick one pair and your payment of this task will depend on your choice in that very row. On the left hand side you see a lottery that gives the chance to win 100 tokens with increasing probability; if chosen, a lottery will decide your payoff in this task, with the given probabilities. The alternative on the right hand side compares your result with that of a randomly chosen participant. If you performed better than the other participant in the cognitive task you receive 100 tokens, otherwise you receive nothing. 
         </p>
     </div>
-    <div id="attention" style="border: 2px solid red;" align="center"> 
-        <p> Notice that we will assume that if you accept the lottery for a certain probability, you should accept it also for higher probability.</p> 
+    <div id="attention" style="border: 2px solid red; width: 800px" align="center"> 
+        <p> Notice that we will assume that if you accept the lottery for a certain probability, you should accept it also for a higher probability.</p> 
     </div>
     <div id="strategy">
         <table class="tg">
@@ -157,15 +157,8 @@
     <script type="text/javascript"> 
 
         function left_click(clicked_id){
-            console.log("Youclickedme")
+            
             var varId = parseInt(clicked_id, 10);
-            i = 1;
-            while(i < varId){
-                var but = [':radio[id=',i,'][value=B]'];
-                var but = but.join("");
-                $(but).prop('checked',true);
-                i++;
-            }
             i = varId;
             while(i < 11){
                 var but = [':radio[id=',i,'][value=A]'];
@@ -174,9 +167,9 @@
                 i++;
             }
         }
+        
         function right_click(clicked_id){
-            console.log("Youclickedme")
-
+            
             var varId = parseInt(clicked_id, 10);
             i = 1;
             j = varId++;
@@ -186,13 +179,7 @@
                 $(but).prop('checked',true);
                 i++;
             }
-            i = varId++;
-            while(i < 11){
-                var but = [':radio[id=',i,'][value=A]'];
-                var but = but.join("");
-                $(but).prop('checked',true);
-                i++;
-            }
+            
         }
 
     </script>

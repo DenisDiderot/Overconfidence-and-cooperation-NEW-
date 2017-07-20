@@ -25,7 +25,7 @@ class Constants(BaseConstants):
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
-    gto_seconds = 10
+    gto_seconds = 30
     overallrounds = True
 
 
@@ -54,20 +54,36 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             d[p] = p.cum_count
         self.sorted_d = sorted(d.items(), key=operator.itemgetter(1))
-
+        for i in range(0, self.participants):
+            print(self.sorted_d[i][1])
+        
     # One problem here could be to deal with the draws. Just tell them? With
     # many participants
     def assign_percentile(self):
-        self.percentile = []  # and question should not be big issue
-        for i in range(0, self.participants):
-            perci = ((i + 1) / self.participants)*10            ## BACK TO PERCENTILE; REMOVE * 10 and CHANGE THE APPEND ###
-            print(perci, type(perci))
-            if (perci < 1):
-                rounded = math.ceil(perci)
-            else:
-                rounded = round(perci)
-            print(rounded, type(rounded))
-            self.percentile.append(rounded/10)                  ### HERE WRITE PERCI ###
+        # self.percentile = []  # and question should not be big issue
+        # for i in range(0, self.participants):
+        #     perci = ((i + 1) / self.participants)*10            ## BACK TO PERCENTILE; REMOVE * 10 and CHANGE THE APPEND ###
+        #     #print(perci, type(perci))
+        #     if (perci < 1):
+        #         rounded = math.ceil(perci)
+        #     else:
+        #         rounded = round(perci)
+        #     #print(rounded, type(rounded))
+        #     self.percentile.append(rounded/10) 
+
+        self.percentile = [0]
+
+        for i in range(1, self.participants):
+            perc = i/self.participants
+            same = 0
+            for j in range(0, i):
+                if self.sorted_d[i][1] == self.sorted_d[j][1]:
+                    same = same + 1/self.participants
+                else:
+                    same = same
+  
+            add = perc - same
+            self.percentile.append(add)
 
     def player_perc(self):
         for p in self.get_players():

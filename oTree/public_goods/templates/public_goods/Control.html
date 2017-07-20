@@ -11,18 +11,18 @@
 	<p> How many rounds are going to be paid? </p>
 		<div class="form-group required">
 			<div class="controls  field-control1">
-	            <label class="radio-inline" for="id_control_1_1"><input type="radio" id="1" value="12" name="control1" onClick="err()" required> <b>12 rounds</b> </label>
+	            <label class="radio-inline" for="id_control_1_1"><input type="radio" id="1_a" value="12" name="control1" required> <b>12 rounds</b> </label>
 
-	            <label class="radio-inline" for="id_control_1_2"><input type="radio" id="1" value="only 1" name="control1" required> <b>Only one of the 12 rounds, randomly selected </b> </label>
+	            <label class="radio-inline" for="id_control_1_2"><input type="radio" id="1_b" value="only 1" name="control1" required> <b>Only one of the 12 rounds, randomly selected </b> </label>
 	        </div>
 	    </div>
 
 	<p> The return of the public good - also called alpha - will depend upon: </p>
 		<div class="form-group required">
 			<div class="controls  field-control2">
-	            <label class="radio" for="id_control_2_1"><input type="radio" id="2" value="either me or the other" name="control2" required> either mine or my opponent's ability </label>
+	            <label class="radio" for="id_control_2_1"><input type="radio" id="2_a" value="either me or the other" name="control2" required> either mine or my opponent's ability </label>
 
-	            <label class="radio" for="id_control_2_2"><input type="radio" id="2" value="given number" name="control2" onClick="err()" required> it is a given number, communicated to me at the beginning of each round </label>
+	            <label class="radio" for="id_control_2_2"><input type="radio" id="2_b" value="given number" name="control2" required> it is a given number, communicated to me at the beginning of each round </label>
 	        </div>
 	    </div>	
 		
@@ -30,9 +30,9 @@
 
 		<div class="form-group required">
 			<div class="controls  field-control3">
-	            <label class="radio" for="id_control_3_1"><input type="radio" id="3" value="me" name="control3" required> Me, with my ability from the previous Task </label>
+	            <label class="radio" for="id_control_3_1"><input type="radio" id="3_a" value="me" name="control3" required> Me, with my ability from the previous Task </label>
 
-	            <label class="radio" for="id_control_3_2"><input type="radio" id="3" value="him" name="control3" onClick="err()" required> My group's companion, with his level of ability </label>
+	            <label class="radio" for="id_control_3_2"><input type="radio" id="3_b" value="him" name="control3" required> My group's companion, with his level of ability </label>
 	        </div>
 	    </div>	
 
@@ -41,21 +41,36 @@
 
 		<div class="form-group required">
 			<div class="controls  field-control4">
-	            <label class="radio" for="id_control_4_1"><input type="radio" id="4" value="me" name="control4" onClick="err()" required> Me, with my ability from the previous Task </label>
+	            <label class="radio" for="id_control_4_1"><input type="radio" id="4_a" value="me" name="control4" required> Me, with my ability from the previous Task </label>
 
-	            <label class="radio" for="id_control_4_2"><input type="radio" id="4" value="him" name="control4" required> My group's companion, with his level of ability </label>
+	            <label class="radio" for="id_control_4_2"><input type="radio" id="4_b" value="him" name="control4" required> My group's companion, with his level of ability </label>
 	        </div>
 	    </div>	
 	
  
 	<p> Again, relying on the previous information, which is going to be the multiplication factor of the public good (i.e. alpha)? </p>
 
-		{% formfield player.control5 with label="" %}
+		<div class="form-group required">
+			<div class="controls  field-control5">
+	            <label class="radio" for="id_control_5_1"><input type="radio" id="5_a" value="0.7" name="control5" required> 0.7 </label>
+
+	            <label class="radio" for="id_control_5_2"><input type="radio" id="5_b" value="no" name="control5" required> I do not have enough information to tell. </label>
+	        </div>
+	    </div>	
+
 
 	<script type="text/javascript">
-		function err(){
-			alert("Are you sure about your answer?");
-		}
+	
+		$('form.form').submit(function(e){
+		    e.preventDefault();
+
+		    var valid = true;
+		    	if ((document.getElementById("1_a").checked) || (document.getElementById("2_b").checked) || (document.getElementById("3_b").checked) || (document.getElementById("4_a").checked) || document.getElementById("5_b").checked) {
+		                valid = false;
+		                alert("There is an error in one of the given answers.");
+		            }
+		    if (valid) this.submit();
+		});
 
 	</script>
 

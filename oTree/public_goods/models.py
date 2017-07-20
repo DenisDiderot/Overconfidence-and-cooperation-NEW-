@@ -131,8 +131,7 @@ class Player(BasePlayer):
     control2 = models.CharField(widget=widgets.RadioSelect())
     control3 = models.CharField(widget=widgets.RadioSelect())
     control4 = models.CharField(widget=widgets.RadioSelect())
-    control5 = models.FloatField(min=0.7, max=0.7)
-
+    control5 = models.CharField(widget=widgets.RadioSelect())
 
     def count_overconfidence(self):
         d = [self.q_conf_1, self.q_conf_2, self.q_conf_3, self.q_conf_4, self.q_conf_5,

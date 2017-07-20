@@ -29,8 +29,8 @@ class Question(GTOPage):
 
         return{
             'round': roundd,
-            'image_path1': 'quiz/{}.jpg'.format(self.round_number),
-            'image_path2': 'quiz/{}R.jpg'.format(self.round_number),
+            'image_path1': 'quiz/form_B/{}.jpg'.format(self.round_number),
+            'image_path2': 'quiz/form_B/{}R.jpg'.format(self.round_number),
         }
 
     def submitted_answer_choices(self):
