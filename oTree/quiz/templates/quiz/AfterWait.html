@@ -3,7 +3,15 @@
 
 {% block content  %}
 
-	<p> Please click on the "Next" button to go to the next page. We will calculate now your results from the quiz. </p>
+	<style>
+	    .page-header {
+	        max-width: 800px;
+	    }
+
+
+	</style>
+
+	<p style="text-align:justify; width: 800px"> Please click on the "Next" button to go to the next page. We will now measure your performance in the cognitive task and create a ranking of all participants in the experiment. </p>
 
     {% next_button %}
 {% endblock %}

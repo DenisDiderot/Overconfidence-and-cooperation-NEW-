@@ -143,7 +143,7 @@ SESSION_CONFIGS = [
     {
         'name': 'OverandCoop',
         'display_name': "Overconfidence (1.0)",
-        'num_demo_participants': 16,
+        'num_demo_participants': 10,
         'app_sequence': ['quiz', 'public_goods'],
         #'treatment': 'blue',
         'real_world_currency_per_point' : 0.05

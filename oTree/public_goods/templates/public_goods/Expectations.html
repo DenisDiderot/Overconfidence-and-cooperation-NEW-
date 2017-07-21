@@ -2,12 +2,12 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Please answer to this question before moving on.
+    Please answer this question before moving on.
 {% endblock %}
 
 {% block content %}
 
-	{% formfield player.expected_contribution with label="How much do you think your group companion contributed to the common project (from 0 to 100)?" %}
+	{% formfield player.expected_contribution with label="How many tokens do you think your partner contributed to the group project (from 0 to 100)?" %}
 
 	{% next_button %}
 

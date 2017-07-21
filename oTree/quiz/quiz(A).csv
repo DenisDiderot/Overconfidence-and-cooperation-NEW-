@@ -1,30 +1,30 @@
 id,question,choice1,choice2,choice3,choice4,choice5,choice6,solution
-1,How do you complete the sequence?,A,B,C,D,E,F,B
-2,How do you complete the sequence?,A,B,C,D,E,F,C
-3,How do you complete the sequence?,A,B,C,D,E,F,F
-4,How do you complete the sequence?,A,B,C,D,E,F,C
-5,How do you complete the sequence?,A,B,C,D,E,F,C
-6,How do you complete the sequence?,A,B,C,D,E,F,A
-7,How do you complete the sequence?,A,B,C,D,E,F,B
-8,How do you complete the sequence?,A,B,C,D,E,F,B
-9,How do you complete the sequence?,A,B,C,D,E,F,B
-10,How do you complete the sequence?,A,B,C,D,E,F,A
-11,How do you complete the sequence?,A,B,C,D,E,F,A
-12,How do you complete the sequence?,A,B,C,D,E,F,E
-13,How do you complete the sequence?,A,B,C,D,E,F,C
-14,How do you complete the sequence?,A,B,C,D,E,F,C
-15,How do you complete the sequence?,A,B,C,D,E,F,F
-16,How do you complete the sequence?,A,B,C,D,E,F,C
-17,How do you complete the sequence?,A,B,C,D,E,F,F
-18,How do you complete the sequence?,A,B,C,D,E,F,D
-19,How do you complete the sequence?,A,B,C,D,E,F,A
-20,How do you complete the sequence?,A,B,C,D,E,F,E
-21,How do you complete the sequence?,A,B,C,D,E,F,D
-22,How do you complete the sequence?,A,B,C,D,E,F,B
-23,How do you complete the sequence?,A,B,C,D,E,F,D
-24,How do you complete the sequence?,A,B,C,D,E,F,E
-25,How do you complete the sequence?,A,B,C,D,E,F,D
-26,How do you complete the sequence?,A,B,C,D,E,F,E
-27,How do you complete the sequence?,A,B,C,D,E,F,F
-28,How do you complete the sequence?,A,B,C,D,E,F,B
-29,How do you complete the sequence?,A,B,C,D,E,F,C
+1,Which cell completes the pattern?,A,B,C,D,E,F,B
+2,Which cell completes the pattern?,A,B,C,D,E,F,C
+3,Which cell completes the pattern?,A,B,C,D,E,F,F
+4,Which cell completes the pattern?,A,B,C,D,E,F,C
+5,Which cell completes the pattern?,A,B,C,D,E,F,C
+6,Which cell completes the pattern?,A,B,C,D,E,F,A
+7,Which cell completes the pattern?,A,B,C,D,E,F,B
+8,Which cell completes the pattern?,A,B,C,D,E,F,B
+9,Which cell completes the pattern?,A,B,C,D,E,F,B
+10,Which cell completes the pattern?,A,B,C,D,E,F,A
+11,Which cell completes the pattern?,A,B,C,D,E,F,A
+12,Which cell completes the pattern?,A,B,C,D,E,F,E
+13,Which cell completes the pattern?,A,B,C,D,E,F,C
+14,Which cell completes the pattern?,A,B,C,D,E,F,C
+15,Which cell completes the pattern?,A,B,C,D,E,F,F
+16,Which cell completes the pattern?,A,B,C,D,E,F,C
+17,Which cell completes the pattern?,A,B,C,D,E,F,F
+18,Which cell completes the pattern?,A,B,C,D,E,F,D
+19,Which cell completes the pattern?,A,B,C,D,E,F,A
+20,Which cell completes the pattern?,A,B,C,D,E,F,E
+21,Which cell completes the pattern?,A,B,C,D,E,F,D
+22,Which cell completes the pattern?,A,B,C,D,E,F,B
+23,Which cell completes the pattern?,A,B,C,D,E,F,D
+24,Which cell completes the pattern?,A,B,C,D,E,F,E
+25,Which cell completes the pattern?,A,B,C,D,E,F,D
+26,Which cell completes the pattern?,A,B,C,D,E,F,E
+27,Which cell completes the pattern?,A,B,C,D,E,F,F
+28,Which cell completes the pattern?,A,B,C,D,E,F,B
+29,Which cell completes the pattern?,A,B,C,D,E,F,C

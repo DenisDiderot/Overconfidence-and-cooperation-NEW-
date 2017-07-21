@@ -17,38 +17,38 @@
 	        </div>
 	    </div>
 
-	<p> The return of the public good - also called alpha - will depend upon: </p>
+	<p> The money invested in the group project will be multiplied by alpha, a value which... </p>
 		<div class="form-group required">
 			<div class="controls  field-control2">
-	            <label class="radio" for="id_control_2_1"><input type="radio" id="2_a" value="either me or the other" name="control2" required> either mine or my opponent's ability </label>
+	            <label class="radio" for="id_control_2_1"><input type="radio" id="2_a" value="either me or the other" name="control2" required> depends on either mine or my opponent's ability. </label>
 
-	            <label class="radio" for="id_control_2_2"><input type="radio" id="2_b" value="given number" name="control2" required> it is a given number, communicated to me at the beginning of each round </label>
+	            <label class="radio" for="id_control_2_2"><input type="radio" id="2_b" value="given number" name="control2" required> is a given number, communicated to me at the beginning of each round. </label>
 	        </div>
 	    </div>	
 		
-	<p> Suppose that you receive the following information: "In this round alpha will depend upon your quantile in the results of the previous task, namely at which point of the ranking your score is. Your group's companion will be informed about this result and will also know your belief about that." Who is determining the alpha in this round? </p>
+	<p> Suppose that you receive the following information: "In this round alpha will depend upon your performance in the previous part: the higher the number of players who scored worse than you, the higher will be alpha. Your group partner will be informed about your performance." Who is determining the alpha in this round? </p>
 
 		<div class="form-group required">
 			<div class="controls  field-control3">
-	            <label class="radio" for="id_control_3_1"><input type="radio" id="3_a" value="me" name="control3" required> Me, with my ability from the previous Task </label>
+	            <label class="radio" for="id_control_3_1"><input type="radio" id="3_a" value="me" name="control3" required> Me, with my ability from the previous part. </label>
 
-	            <label class="radio" for="id_control_3_2"><input type="radio" id="3_b" value="him" name="control3" required> My group's companion, with his level of ability </label>
+	            <label class="radio" for="id_control_3_2"><input type="radio" id="3_b" value="him" name="control3" required> My group's companion, with his performance in part 1. </label>
 	        </div>
 	    </div>	
 
 		
-	<p> On the other hand, suppose you receive this information: "In this round you will be informed on the actual ability of your group companion, namely he is in the 7<sup>th</sup> percentile. The alpha will therefore be 0.7.". Which player is determining the return? </p>
+	<p> Suppose you receive this information: "In this round alpha will depend on the performance of your partner. In the first part he has been better than 7 participants, therefore alpha will be 0.7." Which player is determining the return? </p>
 
 		<div class="form-group required">
 			<div class="controls  field-control4">
-	            <label class="radio" for="id_control_4_1"><input type="radio" id="4_a" value="me" name="control4" required> Me, with my ability from the previous Task </label>
+	            <label class="radio" for="id_control_4_1"><input type="radio" id="4_a" value="me" name="control4" required> Me, with my ability from the previous part. </label>
 
-	            <label class="radio" for="id_control_4_2"><input type="radio" id="4_b" value="him" name="control4" required> My group's companion, with his level of ability </label>
+	            <label class="radio" for="id_control_4_2"><input type="radio" id="4_b" value="him" name="control4" required> My group's companion, with his performance in part 1. </label>
 	        </div>
 	    </div>	
 	
  
-	<p> Again, relying on the previous information, which is going to be the multiplication factor of the public good (i.e. alpha)? </p>
+	<p> Relying on the information from the previous question, which is going to be the multiplication factor of the public good (i.e. alpha)? </p>
 
 		<div class="form-group required">
 			<div class="controls  field-control5">
@@ -67,7 +67,7 @@
 		    var valid = true;
 		    	if ((document.getElementById("1_a").checked) || (document.getElementById("2_b").checked) || (document.getElementById("3_b").checked) || (document.getElementById("4_a").checked) || document.getElementById("5_b").checked) {
 		                valid = false;
-		                alert("There is an error in one of the given answers.");
+		                alert("There is an error in at least one of the given answers.");
 		            }
 		    if (valid) this.submit();
 		});

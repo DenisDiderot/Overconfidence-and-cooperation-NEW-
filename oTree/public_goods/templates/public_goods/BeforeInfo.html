@@ -2,6 +2,28 @@
 {% load staticfiles otree_tags %}
 
 {% block content  %}
-	<p> Notice that the pool of participants is shuffled each period, therefore you will not necessarily face the same player. Read very carefully the information that follows, as it is going to be relevant for the payoff. </p>
+	<style>
+	    .page-header {
+	        max-width: 800px;
+	    }
+
+
+	</style>
+
+	<p style="text-align:justify; width: 800px"> Notice that the pool of participants is shuffled each period, therefore you will not necessarily face repeatedly the same partner. Read very carefully the information that follows, as it is going to be relevant for the payoff. </p>
+
+	{% if player.round_number = 7 %}
+		<div style="border: 2px solid red; width: 850px" align="center">
+			
+			<p style="text-align:justify; width: 800px"> From this round onwards an additional information will be shared. At the end of part 1 both you and your partner completed filled the table that is shown in the figure. We will inform the player whose performance does not decide the alpha in the round about the decision that his/her partner did in the table. More precisely, we will communicate the lowest value for which the partner chose the lottery. The figure is simply an example to remind you how it was structured and to show you which information will be shared. </p>
+			
+			<img src="{% static "public_goods/Round6.JPG" %}" style="width: 800px"/>
+
+		</div>
+
+		<p> </p>
+	{% endif %}
+
     {% next_button %}
+	
 {% endblock %}

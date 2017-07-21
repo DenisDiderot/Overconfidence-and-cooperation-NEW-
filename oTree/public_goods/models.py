@@ -14,7 +14,7 @@ This is a one-period public goods game with 3 players.
 class Constants(BaseConstants):
     name_in_url = 'public_goods'
     players_per_group = 2
-    num_rounds = 1
+    num_rounds = 12
 
     instructions_template = 'public_goods/Instructions.html'
     options = [('A', ''), ('B', '')]
@@ -27,7 +27,6 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    #standard_alpha = models.FloatField()
     treatment_all = models.CharField()
 
     def before_session_starts(self):
@@ -150,10 +149,6 @@ class Player(BasePlayer):
         self.subsession.retrieve_percentile()
         self.result_other = self.get_others_in_group()[0].percentile
 
-    # def define_return(self):
-    #     self.group.define_alpha()
-    #     self.mpcr = self.subsession.standard_alpha * (self.alpha)
-
     def identify_rel_overconfident(self):
         if self.estimate > self.percentile:
             self.guy_relative = "Overconfident"
@@ -237,6 +232,61 @@ class Player(BasePlayer):
                                 blank=True
                                 )
 
+    q_social1 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
 
+
+    q_social2 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social3 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social4 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social5 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social6 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social7 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social8 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+    
+    q_social9 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social10 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social11 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social12 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social13 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
+
+    q_social14 = models.CharField(initial=None,
+                                choices=Constants.likertscale,
+                                widget=widgets.RadioSelectHorizontal())
 
 

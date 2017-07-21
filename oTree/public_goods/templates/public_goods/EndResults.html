@@ -5,9 +5,32 @@
 
 {% block content %}
 	
-	<p> For what concerns the first task, the choice set number {{ random_choice }} has been selected. Here your choice was the {{ choice }} and you gained {{ payoff_elicit }}.</p>
-    <p> In the second task, the round which has been selected is {{ random_public}}, meaning that the payment for this task is {{ payoff_public}}.</p>
-    <p> Therefore the overall payment is {{ player.payoff }}, meaning that the payment in Euro - after having added the 4€ show up fee - is {{ final }}. (Conversion rate was 1 token = 0.05€).</p>
+	<p> In the first task, the choice number {{ random_choice }} has been selected. Here your choice was the {{ choice }} and you gained {{ payoff_elicit }}.</p>
+    <p> In the second task, the selected round is {{ random_public}}, meaning that the payment for this task is {{ payoff_public}}.</p>
+
+    <table class="table-condensed" style="width:500px; margin-top:20px;">
+        <tr><td>You contributed:</td><td>{{ your_contribution }}</td></tr>
+        <tr><td>Other participant contributed:</td><td>{{ his_contribution }}</td></tr>
+        
+        
+
+        <tr><td>Total contribution:</td><td>{{ total }}</td></tr>
+
+        <tr><td colspan="2"><hr/></td></tr>
+
+        
+        <tr><td>Your earnings from the project (alpha={{ alpha }}):</td><td>{{ individual_share }}</td></tr>
+
+        <tr><td colspan="2"><hr/></td></tr>
+
+        <tr><td>Thus in total you earned:</td><td>{{ payoff_public }}</td></tr>
+
+    </table>
+
+    <p> </p>
+
+    <p> Therefore the overall payment is {{ player.payoff }}, meaning that the payment in Euro - after having added the 4€ show up fee - is {{ final }}. </p>
+    <p> (Conversion rate was 1 token = 0.05€).</p>
 
     {% next_button %}
 

@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     name_in_url = 'quiz'
     players_per_group = None
 
-    with open('quiz/quiz(A).csv') as f:  # TO BE CHANGED BEFORE BEGINNING OF THE SESSION ####
+    with open('quiz/quiz(B).csv') as f:  # TO BE CHANGED BEFORE BEGINNING OF THE SESSION ####
         questions = list(csv.DictReader(f))
 
     num_rounds = len(questions)
